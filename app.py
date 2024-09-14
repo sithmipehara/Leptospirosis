@@ -54,20 +54,15 @@ st.markdown("""
 [data-testid="stSelectbox"] > div > div > div {
     background-color:  #1C1C1C;  /* Change to your desired color */
     color: white;  /* Change text color */
+
+/* Change the color of the dropdown arrow */
+[data-testid="stSelectbox"] > div > div > div > div > div > svg {
+    fill:#1C1C1C;  /* Change arrow color */
+}
 }
 
 </style>
 """, unsafe_allow_html=True)
-
-# Example filters
-selected_option = st.selectbox("Select an Option", ["Option 1", "Option 2", "Option 3"])
-selected_options = st.multiselect("Select Multiple Options", ["Option A", "Option B", "Option C"])
-slider_value = st.slider("Select a Value", 0, 100, 50)
-
-# Display selected values
-st.write(f"You selected: {selected_option}")
-st.write(f"You selected: {selected_options}")
-st.write(f"Slider value: {slider_value}")
 
 # MongoDB connection details
 mongo_url = "mongodb+srv://sithmi_pehara:genius2000@cluster0.y5lkbfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
