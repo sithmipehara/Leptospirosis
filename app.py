@@ -32,7 +32,7 @@ st.markdown("""
 st.markdown("""
 <style>
 h1 {
-    color: #1A237E;  /* Change this to your desired color */
+    color: white;  /* Change this to your desired color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -52,30 +52,10 @@ st.markdown("""
 <style>
 /* Change the background color of select boxes */
 [data-testid="stSelectbox"] > div > div > div {
-    background-color: #007bff;  /* Change to your desired color */
+    background-color:  #1C1C1C;  /* Change to your desired color */
     color: white;  /* Change text color */
 }
 
-/* Change the background color of multiselect boxes */
-[data-testid="stMultiSelect"] > div > div > div {
-    background-color: #28a745;  /* Change to your desired color */
-    color: white;  /* Change text color */
-}
-
-/* Change the background color of sliders */
-[data-testid="stSlider"] > div > div {
-    background-color: #ffc107;  /* Change to your desired color */
-}
-
-/* Change the color of the dropdown arrow */
-[data-testid="stSelectbox"] > div > div > div > div > div > svg {
-    fill: white;  /* Change arrow color */
-}
-
-/* Change the color of the slider handle */
-[data-testid="stSlider"] .stSlider {
-    background-color: #007bff;  /* Change to your desired color */
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -448,7 +428,7 @@ district_with_max_cases = max_cases_row['Region']
 max_cases = max_cases_row['Cases']
 
 # Display a note in the sidebar
-st.sidebar.markdown(f"<h4 style='font-size: 20px; color: #1A237E;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
+st.sidebar.markdown(f"<h4 style='font-size: 20px; color:white;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
 st.sidebar.markdown(
     f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
     unsafe_allow_html=True
