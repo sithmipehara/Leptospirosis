@@ -75,7 +75,7 @@ button:hover, button:focus {
     border: 2px solid #00ACC1 !important;  /* Default border color */
 }
 
-[data-testid="stSelectbox"]:hover > div > div > div {
+[data-testid="stSelectbox"]:focus > div > div > div {
     border: 2px solid #00ACC1 !important;  /* Default border color */
 }
 
