@@ -69,6 +69,49 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Custom CSS to change the background color of buttons and filters
+st.markdown("""
+<style>
+/* Change the background color of select boxes */
+[data-testid="stSelectbox"] > div > div > div {
+    background-color: #007bff;  /* Default color */
+    color: white;  /* Change text color */
+}
+
+/* Change the background color of the dropdown list */
+[data-testid="stSelectbox"] > div > div > div > div {
+    background-color: #007bff;  /* Default color */
+    color: white;  /* Change text color */
+}
+
+/* Change the color of the dropdown arrow */
+[data-testid="stSelectbox"] > div > div > div > div > div > svg {
+    fill: white;  /* Change arrow color */
+}
+
+/* Change the background color of buttons */
+button {
+    background-color: #007bff;  /* Default button color */
+    color: white;  /* Button text color */
+}
+
+/* Change button color on hover and active */
+button:hover, button:focus {
+    background-color: #00ACC1 !important;  /* Color on hover and focus */
+}
+
+/* Change select box color on focus */
+[data-testid="stSelectbox"]:focus > div > div > div {
+    background-color: #00ACC1 !important;  /* Color when focused */
+}
+
+/* Change dropdown list color on focus */
+[data-testid="stSelectbox"] > div > div > div > div:focus {
+    background-color: #00ACC1 !important;  /* Color when focused */
+}
+</style>
+""", unsafe_allow_html=True)
+
 # MongoDB connection details
 mongo_url = "mongodb+srv://sithmi_pehara:genius2000@cluster0.y5lkbfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = pymongo.MongoClient(mongo_url)
