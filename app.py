@@ -47,25 +47,37 @@ h2, h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# Custom CSS to change the background color of buttons and filters
 st.markdown("""
 <style>
 /* Change button color on hover and active */
 button:hover, button:focus {
-    color: #00ACC1 !important;  /* Color on hover and focus */
+    background-color: #00ACC1 !important;  /* Background color on hover and focus */
+    color: white !important;  /* Text color on hover and focus */
     border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
 }
 
-/* Change select box color on focus */
+/* Change select box color and border on focus */
 [data-testid="stSelectbox"]:focus > div > div > div {
-    color: #00ACC1 !important;  /* Color when focused */
-    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
+    background-color: #00ACC1 !important;  /* Background color when focused */
+    color: white !important;  /* Text color when focused */
+    border: 2px solid #00ACC1 !important;  /* Border color when focused */
 }
 
 /* Change dropdown list color on focus */
 [data-testid="stSelectbox"] > div > div > div > div:focus {
-    color: #00ACC1 !important;  /* Color when focused */
-    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
+    background-color: #00ACC1 !important;  /* Background color when focused */
+    color: white !important;  /* Text color when focused */
+    border: 2px solid #00ACC1 !important;  /* Border color when focused */
+}
+
+/* Change the default border color for select boxes */
+[data-testid="stSelectbox"] > div > div > div {
+    border: 2px solid #007bff;  /* Default border color */
+}
+
+/* Change dropdown arrow color */
+[data-testid="stSelectbox"] > div > div > div > div > div > svg {
+    fill: white;  /* Change arrow color */
 }
 </style>
 """, unsafe_allow_html=True)
