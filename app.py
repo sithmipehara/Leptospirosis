@@ -71,8 +71,8 @@ button:hover, button:focus {
 }
 
 /* Change the default border color for select boxes */
-[data-testid="stSelectbox"] > div > div > div {
-    border: 2px solid #007bff;  /* Default border color */
+[data-testid="stSelectbox"]:focus > div > div > div {
+    border: 2px solid #00ACC1 !important;  /* Default border color */
 }
 
 /* Change dropdown arrow color */
