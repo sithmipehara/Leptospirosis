@@ -405,9 +405,9 @@ district_with_max_cases = max_cases_row['Region']
 max_cases = max_cases_row['Cases']
 
 # Display a note in the sidebar
-st.sidebar.markdown(f"<h4 style='font-size: 20px;'>Important</h4>", unsafe_allow_html=True)
+st.sidebar.markdown(f"<h4 style='font-size: 20px; color: #FF5733;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
 st.sidebar.markdown(
-    f"<p style='font-size: 20px;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
+    f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
     unsafe_allow_html=True
 )
 
