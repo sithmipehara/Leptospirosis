@@ -1,0 +1,9 @@
+streamlit
+pandas
+pymongo
+numpy
+matplotlib
+scikit-learn
+tensorflow
+folium
+streamlit-folium
