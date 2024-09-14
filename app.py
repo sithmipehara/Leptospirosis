@@ -53,16 +53,19 @@ st.markdown("""
 /* Change button color on hover and active */
 button:hover, button:focus {
     color: #00ACC1 !important;  /* Color on hover and focus */
+    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
 }
 
 /* Change select box color on focus */
 [data-testid="stSelectbox"]:focus > div > div > div {
     color: #00ACC1 !important;  /* Color when focused */
+    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
 }
 
 /* Change dropdown list color on focus */
 [data-testid="stSelectbox"] > div > div > div > div:focus {
     color: #00ACC1 !important;  /* Color when focused */
+    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
 }
 </style>
 """, unsafe_allow_html=True)
