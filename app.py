@@ -47,20 +47,35 @@ h2, h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# Custom CSS to change the filter colors
+# Custom CSS to change the background color of filters
 st.markdown("""
 <style>
 /* Change the background color of select boxes */
 [data-testid="stSelectbox"] > div > div > div {
-    background-color:  #1C1C1C;  /* Change to your desired color */
+    background-color: #1C1C1C;  /* Change to your desired color */
     color: white;  /* Change text color */
+}
+
+/* Change the background color of multiselect boxes */
+[data-testid="stMultiSelect"] > div > div > div {
+    background-color: #1C1C1C;  /* Change to your desired color */
+    color: white;  /* Change text color */
+}
+
+/* Change the background color of sliders */
+[data-testid="stSlider"] > div > div {
+    background-color: #1C1C1C;  /* Change to your desired color */
+}
 
 /* Change the color of the dropdown arrow */
 [data-testid="stSelectbox"] > div > div > div > div > div > svg {
-    fill:#1C1C1C;  /* Change arrow color */
-}
+    fill: white;  /* Change arrow color */
 }
 
+/* Change the color of the slider handle */
+[data-testid="stSlider"] .stSlider {
+    background-color: #1C1C1C;  /* Change to your desired color */
+}
 </style>
 """, unsafe_allow_html=True)
 
