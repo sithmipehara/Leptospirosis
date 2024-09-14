@@ -75,6 +75,10 @@ button:hover, button:focus {
     border: 2px solid #00ACC1 !important;  /* Default border color */
 }
 
+[data-testid="stSelectbox"]:hover > div > div > div {
+    border: 2px solid #00ACC1 !important;  /* Default border color */
+}
+
 /* Change dropdown arrow color */
 [data-testid="stSelectbox"] > div > div > div > div > div > svg {
     fill: white;  /* Change arrow color */
