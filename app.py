@@ -71,7 +71,7 @@ button:hover, button:focus {
 }
 
 /* Change the default border color for select boxes */
-[data-testid="stSelectbox"]:focus > div > div > div {
+[data-testid="stSelectbox"]:active > div > div > div {
     border: 2px solid #00ACC1 !important;  /* Default border color */
 }
 
