@@ -62,6 +62,12 @@ st.markdown("""
     color: white;  /* Change text color */
 }
 
+/* Change the background color of the multiselect dropdown list */
+[data-testid="stMultiSelect"] > div > div > div > div {
+    background-color: #1C1C1C;  /* Change to your desired color */
+    color: white;  /* Change text color */
+}
+
 /* Change the background color of sliders */
 [data-testid="stSlider"] > div > div {
     background-color: #1C1C1C;  /* Change to your desired color */
