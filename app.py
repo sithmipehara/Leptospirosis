@@ -16,9 +16,11 @@ from matplotlib import cm, colors
 from streamlit_option_menu import option_menu
 from PIL import Image
 
+# Set the page configuration at the very beginning
+st.set_page_config(layout='wide')
 
 # Set the background image URL
-background_image_url = "https://www.metropolisindia.com/upgrade/blog/upload/2022/11/Infectious-Disease_-Symptoms-Causes-Types-_-Treatment.png"
+background_image_url = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.news-medical.net%2Fnews%2F20220216%2FThe-emergence-of-infectious-diseases-from-the-germe28099s-eye-viewe2809d.aspx&psig=AOvVaw1d0im9dC7PDqh8Yg8icFX2&ust=1726493243588000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIC3kNWGxYgDFQAAAAAdAAAAABAw"
 
 # Inject CSS to set the background image
 st.markdown(
