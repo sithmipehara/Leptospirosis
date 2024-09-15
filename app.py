@@ -197,7 +197,7 @@ with st.sidebar:
 #selected_year = st.sidebar.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
 
 # Filter data based on the selected year
-filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+#filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
 
 # Sidebar filter for region
 with st.sidebar:
@@ -219,7 +219,7 @@ with st.sidebar:
 #selected_region = st.sidebar.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
 
 # Filter data based on the selected region
-region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+#region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
 
 # Function to create a color scale based on the number of cases
 def get_color(cases, max_cases):
@@ -466,8 +466,6 @@ st.write("")
 st.write("")
 st.write("")
 st.write("")
-st.write("")
-st.write("")
 
 # Find the district with the maximum number of cases for the selected year
 max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
@@ -478,11 +476,11 @@ max_cases = max_cases_row['Cases']
 st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
 
 # Create the first row: Year filter and map
-col1, col2 = st.columns([1, 4])
+col1, col2 = st.columns([4, 1])
 with col1:
     #selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
     # Filter data based on the selected year
-    #filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
     # Create and display the map for the selected year
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map)
@@ -510,12 +508,9 @@ col3, col4 = st.columns([1,0])  # Adjust the width ratio as needed
 with col3:
     #selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
     # Filter data based on the selected region
-    #region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+    region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
     plot_time_series()
-
-    
-
 
 
 # Display yearly cases
