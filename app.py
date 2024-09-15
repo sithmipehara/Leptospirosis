@@ -534,14 +534,14 @@ if st.button("Show Annual Forecast"):
     
     plt.figure(figsize=(12, 6))
     plt.style.use('dark_background')  # Set dark theme
-    plt.plot(annual_cases['Year'], annual_cases['Cases'], marker='', linestyle='-', label='Actual Annual Cases')
+    plt.plot(annual_cases['Year'], annual_cases['Cases'], marker='o', linestyle='-', label='Actual Annual Cases')
     
     forecast_years = np.arange(annual_cases['Year'].iloc[-1] + 1, annual_cases['Year'].iloc[-1] + 6)
     plt.plot(forecast_years, future_forecast, marker='', linestyle='-', label='Forecasted Annual Cases', color='orange')
     
     # Plot the predicted values
     predicted_years = annual_cases['Year'].iloc[-len(predictions):].values
-    plt.plot(predicted_years, predictions, marker='', linestyle='-', label='Predicted Annual Cases', color='green')
+    plt.plot(predicted_years, predictions, marker='o', linestyle='-', label='Predicted Annual Cases', color='green')
     
     plt.title('Annual Leptospirosis Cases with Forecast', color='white')
     plt.xlabel('Year', color='white')
