@@ -97,28 +97,28 @@ st.markdown("""
 <style>
 /* Change button color on hover and active */
 button:hover, button:focus {
-    background-color: #00ACC1 !important;  /* Background color on hover and focus */
+    background-color: #00796B !important;  /* Background color on hover and focus */
     color: white !important;  /* Text color on hover and focus */
-    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
+    border: 2px solid #00796B !important;  /* Border color on hover and focus */
 }
 
 /* Change select box color on focus */
 [data-testid="stSelectbox"]:active > div > div > div {
-    background-color: #00ACC1 !important;  /* Background color when focused */
+    background-color: #00796B !important;  /* Background color when focused */
     color: white !important;  /* Text color when focused */
-    border: 2px solid #00ACC1 !important;  /* Border color when focused */
+    border: 2px solid #00796B !important;  /* Border color when focused */
 }
 
 /* Change dropdown list color on focus */
 [data-testid="stSelectbox"] > div > div > div > div:focus {
-    background-color: #00ACC1 !important;  /* Background color when focused */
+    background-color: #00796B !important;  /* Background color when focused */
     color: white !important;  /* Text color when focused */
-    border: 2px solid #00ACC1 !important;  /* Border color when focused */
+    border: 2px solid #00796B !important;  /* Border color when focused */
 }
 
 /* Change the default border color for select boxes */
 [data-testid="stSelectbox"] > div > div > div {
-    border: 1px solid #00ACC1;  /* Default border color */
+    border: 1px solid #00796B;  /* Default border color */
 }
 </style>
 """, unsafe_allow_html=True)
