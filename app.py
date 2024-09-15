@@ -13,14 +13,65 @@ import folium
 from streamlit_folium import folium_static
 import json
 from matplotlib import cm, colors
+from streamlit_option_menu import option_menu
 
 st.set_page_config(layout='wide')
+
+# Main content
+# Inject custom CSS to change font size and color for specific title and content
+st.markdown("""
+<style>
+.custom-title {
+    font-size: 36px;  /* Change to your desired font size */
+    color: #EF9A9A; 
+    text-align: center ;/* Change to your desired font color */
+}
+
+.custom-content {
+    font-size: 20px;   /* Change to your desired font size for content */
+    color: white;   
+    text-align: center ;/* Change to your desired font color for content */
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Custom title with specific class
+st.markdown('<p class="custom-title">Welcome to Our Dashboard !!!</p>', unsafe_allow_html=True)
+
+# Custom main content with specific class
+st.markdown('<p class="custom-content">This is the main content area of your Streamlit dashboard.</p>', unsafe_allow_html=True)
+
+# Inject custom CSS to change font type for all titles
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;  /* Change to your desired font */
+    text-transform: uppercase;  /* Make all titles uppercase */
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Inject custom CSS to change font type for all titles and paragraphs to uppercase
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+p {
+    font-family: 'Playfair Display', serif;  /* Change to your desired font */
+    
+</style>
+""", unsafe_allow_html=True)
+
+# Display the title using Markdown to allow line breaks
+st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
 <style>
 [data-testid="stSidebar"] {
-    background-color: #1C1C1C;  /* Change this to your desired sidebar color */
+    background-color: #1A1F4A;  /* Change this to your desired sidebar color */
 }
 [data-testid="stAppViewContainer"] {
     background-color: #000000;  /* Change this to your desired main background color */
@@ -41,10 +92,71 @@ h1 {
 st.markdown("""
 <style>
 h2, h3 {
-    text-align: center;
+    text-align: center ;
+    color:#00BCD4;
 }
 </style>
 """, unsafe_allow_html=True)
+
+# Custom CSS to change the background color of buttons and filters
+st.markdown("""
+<style>
+/* Change button color on hover and active */
+button:hover, button:focus {
+    background-color: #00ACC1 !important;  /* Background color on hover and focus */
+    color: white !important;  /* Text color on hover and focus */
+    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
+}
+
+/* Change select box color on focus */
+[data-testid="stSelectbox"]:active > div > div > div {
+    background-color: #00ACC1 !important;  /* Background color when focused */
+    color: white !important;  /* Text color when focused */
+    border: 2px solid #00ACC1 !important;  /* Border color when focused */
+}
+
+/* Change dropdown list color on focus */
+[data-testid="stSelectbox"] > div > div > div > div:focus {
+    background-color: #00ACC1 !important;  /* Background color when focused */
+    color: white !important;  /* Text color when focused */
+    border: 2px solid #00ACC1 !important;  /* Border color when focused */
+}
+
+/* Change the default border color for select boxes */
+[data-testid="stSelectbox"] > div > div > div {
+    border: 1px solid #00ACC1;  /* Default border color */
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Sidebar navigation using option_menu
+with st.sidebar:
+    selected = option_menu("Navigation", 
+                           ["Home", "Global Dashboard"],
+                           icons=['house', 'bar-chart'],
+                           menu_icon="cast",  # Optional: icon for the menu title
+                           default_index=0,
+                           styles={
+                               "container": {"padding": "5!important", "background-color": "#111"},
+                               "icon": {"color": "white", "font-size": "20px"},
+                               "nav-link": {
+                                   "font-size": "16px",
+                                   "text-align": "left",
+                                   "margin": "0px",
+                                   "padding": "10px 15px",
+                                   "color": "white",
+                                   "background-color": "#111"
+                               },
+                               "nav-link-selected": {"background-color": "#555"},
+                           }
+    )
+
+# Redirect based on selection
+if selected == "Home":
+    st.markdown('<meta http-equiv="refresh" content="0; url=http://localhost:8000/Leptospirosis/index.html">', unsafe_allow_html=True)
+
+elif selected == "Global Dashboard":
+    st.markdown('<meta http-equiv="refresh" content="0; url=http://localhost:8000/Leptospirosis/about.html">', unsafe_allow_html=True)
 
 # MongoDB connection details
 mongo_url = "mongodb+srv://sithmi_pehara:genius2000@cluster0.y5lkbfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -131,16 +243,20 @@ def calculate_annual_cases(df):
 annual_cases_df = calculate_annual_cases(weekly_df)
 
 # Sidebar filter for year
-#selected_year = st.sidebar.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
+selected_year = st.sidebar.selectbox("**Select a Year**", sorted(annual_cases_df['Year'].unique()))
 
 # Filter data based on the selected year
-#filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+
+# Add a gap between the filters using Markdown
+st.sidebar.markdown("<br>", unsafe_allow_html=True)  # Add a line break for spacing
+st.sidebar.markdown("<br>", unsafe_allow_html=True)
 
 # Sidebar filter for region
-#selected_region = st.sidebar.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
+selected_region = st.sidebar.selectbox("**Select a District**", sorted(annual_cases_df['Region'].unique()))
 
 # Filter data based on the selected region
-#region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
 
 # Function to create a color scale based on the number of cases
 def get_color(cases, max_cases):
@@ -204,6 +320,7 @@ def plot_time_series():
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
     plt.grid(True)
+    plt.gca().set_facecolor('black')
     st.pyplot(fig)
 
 # Function to plot yearly cases
@@ -382,46 +499,33 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Streamlit layout
-st.title("Local Leptospirosis Cases (From 2007 - Present)")
 st.write("")
 st.write("")
 
-# Create the first row: Year filter and map
-col1, col2 = st.columns([1, 4])
+st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
+# Create two columns for layout
+col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
+
+# Display the map in the first column
 with col1:
-    selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
-with col2:
-    # Filter data based on the selected year
-    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
-    # Create and display the map for the selected year
-    st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map)
-    
+
 # Find the district with the maximum number of cases for the selected year
 max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
 district_with_max_cases = max_cases_row['Region']
 max_cases = max_cases_row['Cases']
 
-# Display a note in the sidebar
-st.sidebar.markdown(f"<h4 style='font-size: 20px;'>Important</h4>", unsafe_allow_html=True)
-st.sidebar.markdown(
-    f"<p style='font-size: 20px;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
-    unsafe_allow_html=True
-)
+# Display the markdown note in the second column
+with col2:
+    st.markdown(f"<h4 style='font-size: 20px;'></h4>", unsafe_allow_html=True)
+    st.markdown(
+        f"<p style='font-size: 20px;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
+        unsafe_allow_html=True
+    )
 
-# Create the second row: District filter and time series plot
-col3, col4 = st.columns([1, 4])  # Adjust the width ratio as needed
-    
-# Place the district filter close to the time series
-with col3:
-    selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
-with col4:
-    # Filter data based on the selected region
-    region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
-    # Display the time series plot
-    st.subheader("Annual District-wise Leptospirosis Cases")
-    plot_time_series()
+st.subheader("Annual District-wise Leptospirosis Cases")
+plot_time_series()
 
 
 
