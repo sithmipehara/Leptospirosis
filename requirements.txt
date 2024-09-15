@@ -7,3 +7,4 @@ scikit-learn
 tensorflow
 folium
 streamlit-folium
+streamlit-option-menu
