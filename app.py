@@ -25,6 +25,10 @@ div.stTitle {
 </style>
 """, unsafe_allow_html=True)
 
+# Display the title using Markdown to allow line breaks
+st.markdown("<h1 style='text-align: center;'>Local Leptospirosis Cases</h1>", unsafe_allow_html=True)
+
+
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
 <style>
@@ -180,16 +184,36 @@ def calculate_annual_cases(df):
 annual_cases_df = calculate_annual_cases(weekly_df)
 
 # Sidebar filter for year
+with st.sidebar:
+    # Add vertical space in the sidebar
+    st.write("")  # First blank line
+    st.write("")  # Second blank line
+    st.write("")  # Third blank line
+    st.write("")  # Fourth blank line
+    st.write("")  # Fifth blank line
+
+    # Now add the selectbox
+    selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
 #selected_year = st.sidebar.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
 
 # Filter data based on the selected year
-#filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
 
 # Sidebar filter for region
+with st.sidebar:
+    # Add vertical space in the sidebar
+    st.write("")  # First blank line
+    st.write("")  # Second blank line
+    st.write("")  # Third blank line
+    st.write("")  # Fourth blank line
+    st.write("")  # Fifth blank line
+
+    # Now add the selectbox
+    selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
 #selected_region = st.sidebar.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
 
 # Filter data based on the selected region
-#region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
 
 # Function to create a color scale based on the number of cases
 def get_color(cases, max_cases):
@@ -432,14 +456,12 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Streamlit layout
-st.title("Local Leptospirosis Cases (From 2007 - Present)")
 st.write("")
 st.write("")
 st.write("")
 st.write("")
 st.write("")
-st.write("")
-st.write("")
+st.write("From 2007 - Present")
 
 # Create the first row: Year filter and map
 col1, col2 = st.columns([1, 4])
