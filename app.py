@@ -61,9 +61,9 @@ p {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks 
-# Load an image from a local file
-image = Image.open("C:/Users/User/Desktop/sithmi/DS 4004/Grp project/Leptospirosis/images/t4.jpg")  # Adjust the path as necessary
-st.image(image, caption='Your Image Caption', width=300)  # Display the image
+# URL of the image
+image_url = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2FAmazinglanka.ceylon%2F&psig=AOvVaw3NZYEZqMNeg9XsSgxurmBE&ust=1726495204321000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCTgK6OxYgDFQAAAAAdAAAAABBR'  # Replace with your image URL
+st.image(image_url, caption='Your Image Caption', width=300)  # Display the image
 st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
