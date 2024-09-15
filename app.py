@@ -560,7 +560,7 @@ if st.button("Show Annual Forecast"):
     st.pyplot(plt)
     
     # Display accuracy metrics
-    st.subheader("RNN Model Accuracy Metrics for Annual Cases")
+    st.subheader("LSTM Model Accuracy Metrics for Annual Cases")
     st.write(f"Mean Absolute Error (MAE): {mae:.2f}")
     st.write(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
     st.write(f"Test Accuracy Percentage: {accuracy_percentage:.2f}%")
@@ -609,7 +609,7 @@ if st.button("Show Weekly Forecast"):
     st.pyplot(plt)
     
     # Display accuracy metrics
-    st.subheader("RNN Model Accuracy Metrics for Weekly Cases")
+    st.subheader("LSTM Model Accuracy Metrics for Weekly Cases")
     st.write(f"Mean Absolute Error (MAE): {mae:.2f}")
     st.write(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
     st.write(f"Test Accuracy Percentage: {accuracy_percentage:.2f}%")
