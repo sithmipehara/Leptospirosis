@@ -19,7 +19,7 @@ from PIL import Image
 st.set_page_config(layout='wide')
 
 # Load the image
-image = Image.open('path/to/your/image.png')
+image = Image.open('https://github.com/sithmipehara/Leptospirosis/blob/main/Leptospirosis/images/hero-bg.jpg')
 
 # Display the image as the background
 st.markdown(
