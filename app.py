@@ -206,7 +206,13 @@ with st.sidebar:
     st.write("")  # Second blank line
     st.write("")  # Third blank line
     st.write("")  # Fourth blank line
-    st.write("")  # Fifth blank line
+    st.write("") 
+    st.write("") 
+    st.write("") 
+    st.write("") 
+    st.write("") 
+    st.write("") 
+    st.write("") 
 
     # Now add the selectbox
     selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
@@ -463,42 +469,49 @@ st.write("")
 st.write("")
 st.write("From 2007 - Present")
 
+# Find the district with the maximum number of cases for the selected year
+max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
+district_with_max_cases = max_cases_row['Region']
+max_cases = max_cases_row['Cases']
+
 # Create the first row: Year filter and map
 col1, col2 = st.columns([1, 4])
 with col1:
-    selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
-with col2:
+    #selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
     # Filter data based on the selected year
     filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
     # Create and display the map for the selected year
     st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map)
+with col2:
+    # Display a note in col1
+        st.markdown(f"<h4 style='font-size: 20px; color:white;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
+        st.markdown(
+            f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
+            unsafe_allow_html=True
+        )
     
-# Find the district with the maximum number of cases for the selected year
-max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
-district_with_max_cases = max_cases_row['Region']
-max_cases = max_cases_row['Cases']
-
 # Display a note in the sidebar
-st.sidebar.markdown(f"<h4 style='font-size: 20px; color:white;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
-st.sidebar.markdown(
-    f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
-    unsafe_allow_html=True
-)
+#st.sidebar.markdown(f"<h4 style='font-size: 20px; color:white;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
+#st.sidebar.markdown(
+    #f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
+    #unsafe_allow_html=True
+#)
 
 # Create the second row: District filter and time series plot
 col3, col4 = st.columns([1, 4])  # Adjust the width ratio as needed
     
 # Place the district filter close to the time series
 with col3:
-    selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
-with col4:
+    #selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
     # Filter data based on the selected region
     region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
     st.subheader("Annual District-wise Leptospirosis Cases")
     plot_time_series()
+with col4:
+    
 
 
 
