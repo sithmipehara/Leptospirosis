@@ -35,10 +35,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-
-
-
 # Inject custom CSS to change font type for all titles
 st.markdown("""
 <style>
@@ -81,7 +77,7 @@ st.markdown("""
 st.markdown("""
 <style>
 h1 {
-    color: #FF5050;  /* Change this to your desired color */
+    color: #4DB6AC;  /* Change this to your desired color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -628,8 +624,8 @@ if st.button("Show Weekly Forecast"):
         )
 
 # Custom title with specific class
-st.markdown('<p class="custom-title">Welcome to Our Dashboard !!!</p>', unsafe_allow_html=True)
+st.markdown('<p class="custom-title">Thank you for visiting our dashboard !!!</p>', unsafe_allow_html=True)
 
 # Custom main content with specific class
-st.markdown('<p class="custom-content">This is the main content area of your Streamlit dashboard.</p>', unsafe_allow_html=True)
+st.markdown('<p class="custom-content">We appreciate your time and interest.</p>', unsafe_allow_html=True)
 
