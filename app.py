@@ -19,7 +19,7 @@ from PIL import Image
 # Set the page configuration
 st.set_page_config(
     page_title="Sri Lanka Dashboard",
-    page_icon="C:\\Users\\User\\Desktop\\sithmi\\DS 4004\\Grp project\\Leptospirosis\\images\sl.png",  # Replace with your icon path
+      # Replace with your icon path
     layout="wide",
     initial_sidebar_state="expanded"
 )
