@@ -510,7 +510,7 @@ with col3:
     # Display the time series plot
     st.subheader("Annual District-wise Leptospirosis Cases")
     plot_time_series()
-with col4:
+
     
 
 
