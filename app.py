@@ -61,7 +61,9 @@ p {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks 
-st.markdown("🦁")
+# Load an image from a local file
+image = Image.open("C:/Users/User/Desktop/sithmi/DS 4004/Grp project/Leptospirosis/images/t4.jpg")  # Adjust the path as necessary
+st.image(image, caption='Your Image Caption', width=300)  # Display the image
 st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
