@@ -578,7 +578,7 @@ if st.button("Show Annual Forecast"):
     # Check for high forecast values
     if any(future_forecast.flatten() > 1000):
         st.sidebar.markdown(
-            "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more years!</p>",
+            "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 1000 for one or more years!</p>",
             unsafe_allow_html=True
         )
     
