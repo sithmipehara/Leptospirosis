@@ -18,16 +18,18 @@ from PIL import Image
 
 st.set_page_config(layout='wide')
 
-# Load the image
-image = Image.open("https://www.metropolisindia.com/upgrade/blog/upload/2022/11/Infectious-Disease_-Symptoms-Causes-Types-_-Treatment.png", use_column_width=True)
+# Set the background image URL
+background_image_url = "https://www.metropolisindia.com/upgrade/blog/upload/2022/11/Infectious-Disease_-Symptoms-Causes-Types-_-Treatment.png"
 
-# Display the image as the background
+# Inject CSS to set the background image
 st.markdown(
     f"""
     <style>
     .stApp {{
-        background-image: url(data:image/png;base64,{image_to_base64(image)});
+        background-image: url('{background_image_url}');
         background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
     }}
     </style>
     """,
