@@ -16,6 +16,15 @@ from matplotlib import cm, colors
 
 st.set_page_config(layout='wide')
 
+# Add custom CSS to increase the margin-top of the title
+st.markdown("""
+<style>
+div.stTitle {
+    margin-top: -50px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
 <style>
