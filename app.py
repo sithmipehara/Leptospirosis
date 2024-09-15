@@ -62,7 +62,7 @@ p {
 
 # Display the title using Markdown to allow line breaks
 # Load the image
-image_path = "C:\\Users\\User\\Desktop\\sithmi\\DS 4004\\Grp project\\Leptospirosis\\images\\sl.png"  # Adjust the path as necessary
+image_path = "https://github.com/sithmipehara/Leptospirosis/blob/main/Leptospirosis/images/sl.png"  # Adjust the path as necessary
 
 # Create a title with an image beside it
 col1, col2 = st.columns([1, 5])  # Create two columns
