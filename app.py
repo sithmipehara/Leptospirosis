@@ -482,7 +482,7 @@ col1, col2 = st.columns([1, 4])
 with col1:
     #selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
     # Filter data based on the selected year
-    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+    #filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
     # Create and display the map for the selected year
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map)
@@ -504,13 +504,13 @@ with col2:
 st.subheader("Annual District-wise Leptospirosis Cases")
 
 # Create the second row: District filter and time series plot
-col3, col4 = st.columns([1,4])  # Adjust the width ratio as needed
+col3, col4 = st.columns([1,0])  # Adjust the width ratio as needed
     
 # Place the district filter close to the time series
 with col3:
-    selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
+    #selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
     # Filter data based on the selected region
-    region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+    #region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
     plot_time_series()
 
