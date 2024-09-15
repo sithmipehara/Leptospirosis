@@ -490,7 +490,7 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Streamlit layout
-st.title("🦁 Local Leptospirosis Cases (From 2007 - Present)")
+st.title(f"🦁 Local Leptospirosis Cases (From 2007 - Present)")
 
 st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
 # Create two columns for layout
