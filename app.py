@@ -20,7 +20,7 @@ st.set_page_config(layout='wide')
 st.markdown("""
 <style>
 div.stTitle {
-    margin-top: -500px;
+    margin-top: -200px;
 }
 </style>
 """, unsafe_allow_html=True)
