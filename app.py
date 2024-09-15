@@ -61,7 +61,7 @@ p {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks 
-st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>🦁 Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;color:#FFFFFF;'> 🦁 Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
