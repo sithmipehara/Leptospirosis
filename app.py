@@ -14,8 +14,25 @@ from streamlit_folium import folium_static
 import json
 from matplotlib import cm, colors
 from streamlit_option_menu import option_menu
+from PIL import Image
 
 st.set_page_config(layout='wide')
+
+# Load the image
+image = Image.open('path/to/your/image.png')
+
+# Display the image as the background
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/png;base64,{image_to_base64(image)});
+        background-size: cover;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Main content
 # Inject custom CSS to change font size and color for specific title and content
