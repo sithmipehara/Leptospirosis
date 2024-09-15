@@ -18,23 +18,7 @@ from PIL import Image
 
 st.set_page_config(layout='wide')
 
-# Set the background image URL
-background_image_url = "https://www.metropolisindia.com/upgrade/blog/upload/2022/11/Infectious-Disease_-Symptoms-Causes-Types-_-Treatment.png"
 
-# Inject CSS to set the background image
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url('{background_image_url}');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # Main content
 # Inject custom CSS to change font size and color for specific title and content
