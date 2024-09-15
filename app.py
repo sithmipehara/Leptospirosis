@@ -194,23 +194,6 @@ with st.sidebar:
 
     # Now add the selectbox
     selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
-#selected_year = st.sidebar.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
-
-# Filter data based on the selected year
-#filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
-
-    # Add vertical space in the sidebar
-    st.write("")  # First blank line
-    st.write("")  # Second blank line
-    st.write("")  # Third blank line
-    st.write("")  # Fourth blank line
-    st.write("") 
-    st.write("") 
-    st.write("") 
-    st.write("") 
-    st.write("") 
-    st.write("") 
-    st.write("") 
 
     # Now add the selectbox
     #selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
@@ -498,14 +481,8 @@ with col2:
 
 st.subheader("Annual District-wise Leptospirosis Cases")
 
-# Filter data based on the selected region
-#region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
-
-# Display the time series plot (assuming plot_time_series is defined)
-#plot_time_series()
-
 # Create the second row: District filter and time series plot
-col3, col4 = st.columns([1,4])  # Adjust the width ratio as needed
+col3, col4 = st.columns([1, 4])  # Adjust the width ratio as needed
     
 # Place the district filter close to the time series
 with col3:
@@ -514,7 +491,6 @@ with col3:
     region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
     plot_time_series()
-
 
 # Display yearly cases
 st.subheader("Annual Leptospirosis Cases in Sri Lanka")
