@@ -87,7 +87,7 @@ st.markdown("""
 <style>
 h2, h3 {
     text-align: center ;
-    color:#00BCD4;
+    color:#679590;
 }
 </style>
 """, unsafe_allow_html=True)
