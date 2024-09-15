@@ -325,7 +325,7 @@ def plot_yearly_cases():
     
     plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     
-    plt.title('**From 2007 - Present**', color='#80CBC4')
+    plt.title('From 2007 - Present', color='#80CBC4')
     plt.xlabel('Year', color='white')
     plt.ylabel('Cases', color='white')
     plt.xticks(SriLanka_cases['Year'])
