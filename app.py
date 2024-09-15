@@ -77,7 +77,7 @@ st.markdown("""
 st.markdown("""
 <style>
 h1 {
-    color: #4DB6AC;  /* Change this to your desired color */
+    color: #679590;  /* Change this to your desired color */
 }
 </style>
 """, unsafe_allow_html=True)
