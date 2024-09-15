@@ -504,7 +504,7 @@ with col2:
 st.subheader("Annual District-wise Leptospirosis Cases")
 
 # Create the second row: District filter and time series plot
-col3, col4 = st.columns([1, 0])  # Adjust the width ratio as needed
+col3, col4 = st.columns([1,4])  # Adjust the width ratio as needed
     
 # Place the district filter close to the time series
 with col3:
