@@ -61,7 +61,17 @@ p {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks
-st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
+# Load the image
+image_path = "C:\\Users\\User\\Desktop\\sithmi\\DS 4004\\Grp project\\Leptospirosis\\images\\sl.png"  # Adjust the path as necessary
+
+# Create a title with an image beside it
+col1, col2 = st.columns([1, 5])  # Create two columns
+
+with col1:
+    st.image(image_path, width=50)  # Display the image with a specified width
+
+with col2:
+    st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
