@@ -90,7 +90,7 @@ st.markdown("""
 <style>
 h2, h3 {
     text-align: center ;
-    color:#679590;
+    color:#B2DFDB;
 }
 </style>
 """, unsafe_allow_html=True)
