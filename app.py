@@ -311,7 +311,7 @@ def plot_time_series():
     ax.set_title(f'{selected_region} District')
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
-    plt.grid(True)
+    plt.grid(True, color='gray')
     plt.gca().set_facecolor('black')
     st.pyplot(fig)
 
