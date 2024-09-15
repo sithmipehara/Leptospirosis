@@ -26,10 +26,10 @@ st.markdown(
     f"""
     <style>
     .stApp {{
-        background-image: url('{background_image_url}');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+        background-image: url('file://{background_image_path}');
+        background-size: cover;  /* Cover the entire background */
+        background-repeat: no-repeat;  /* Do not repeat the image */
+        background-position: center;  /* Center the image */
         height: 100vh;  /* Ensures the background covers the entire viewport height */
     }}
     </style>
