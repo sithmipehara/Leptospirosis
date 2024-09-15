@@ -71,7 +71,7 @@ st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis C
 st.markdown("""
 <style>
 [data-testid="stSidebar"] {
-    background-color: #0097A7;  /* Change this to your desired sidebar color */
+    background-color: #0A3236;  /* Change this to your desired sidebar color */
 }
 [data-testid="stAppViewContainer"] {
     background-color: #000000;  /* Change this to your desired main background color */
