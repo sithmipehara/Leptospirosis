@@ -305,7 +305,7 @@ def create_sri_lanka_map(filtered_data):
 # Create a time series plot for the selected region
 def plot_time_series():
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(region_data['Year'], region_data['Cases'])
+    ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
     ax.set_title(f'{selected_region} District')
