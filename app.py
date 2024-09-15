@@ -153,10 +153,10 @@ with st.sidebar:
 
 # Redirect based on selection
 if selected == "Home":
-    st.markdown('<meta http-equiv="refresh" content="0; url=">', unsafe_allow_html=True)
+    st.markdown('<meta http-equiv="refresh" content="0; url=Leptospirosis\\index.html">', unsafe_allow_html=True)
 
 elif selected == "Global Dashboard":
-    st.markdown('<meta http-equiv="refresh" content="0; url=">', unsafe_allow_html=True)
+    st.markdown('<meta http-equiv="refresh" content="0; url=Leptospirosis\\about.html">', unsafe_allow_html=True)
 
 # MongoDB connection details
 mongo_url = "mongodb+srv://sithmi_pehara:genius2000@cluster0.y5lkbfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
