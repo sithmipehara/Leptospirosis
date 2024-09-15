@@ -17,12 +17,7 @@ from streamlit_option_menu import option_menu
 from PIL import Image
 
 # Set the page configuration
-st.set_page_config(
-    page_title="Sri Lanka Dashboard",
-      # Replace with your icon path
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+st.set_page_config(layout="wide")
 
 # Main content
 # Inject custom CSS to change font size and color for specific title and content
