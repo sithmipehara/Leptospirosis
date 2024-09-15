@@ -26,7 +26,7 @@ div.stTitle {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks
-st.markdown("<h1 style='text-align: center;'>Local Leptospirosis Cases</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Local Leptospirosis Cases<br> From 2007 - Present</h1>", unsafe_allow_html=True)
 
 
 # Custom CSS to change the background color of the sidebar and main area
@@ -467,12 +467,15 @@ st.write("")
 st.write("")
 st.write("")
 st.write("")
-st.write("From 2007 - Present")
+st.write("")
 
 # Find the district with the maximum number of cases for the selected year
 max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
 district_with_max_cases = max_cases_row['Region']
 max_cases = max_cases_row['Cases']
+
+# Create the first row: Year filter and map
+st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
 
 # Create the first row: Year filter and map
 col1, col2 = st.columns([1, 4])
@@ -481,7 +484,6 @@ with col1:
     # Filter data based on the selected year
     filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
     # Create and display the map for the selected year
-    st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map)
 with col2:
@@ -499,6 +501,7 @@ with col2:
     #unsafe_allow_html=True
 #)
 
+st.subheader("Annual District-wise Leptospirosis Cases")
 # Create the second row: District filter and time series plot
 col3, col4 = st.columns([1, 4])  # Adjust the width ratio as needed
     
@@ -508,7 +511,6 @@ with col3:
     # Filter data based on the selected region
     region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
-    st.subheader("Annual District-wise Leptospirosis Cases")
     plot_time_series()
 
     
