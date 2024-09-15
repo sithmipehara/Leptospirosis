@@ -308,7 +308,7 @@ def plot_time_series():
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
-    ax.set_title(f'{selected_region} District')
+    ax.set_title(f'{selected_region} District', color='#80CBC4')
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
     plt.grid(True, color='gray')
