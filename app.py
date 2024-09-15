@@ -16,19 +16,6 @@ from matplotlib import cm, colors
 
 st.set_page_config(layout='wide')
 
-# Add custom CSS to increase the margin-top of the title
-st.markdown("""
-<style>
-div.stTitle {
-    margin-top: -200px;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Display the title using Markdown to allow line breaks
-st.markdown("<h1 style='text-align: center;'>Local Leptospirosis Cases<br> From 2007 - Present</h1>", unsafe_allow_html=True)
-
-
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
 <style>
@@ -45,7 +32,7 @@ st.markdown("""
 st.markdown("""
 <style>
 h1 {
-    color: white;  /* Change this to your desired color */
+    color: #FF5050;  /* Change this to your desired color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -55,46 +42,6 @@ st.markdown("""
 <style>
 h2, h3 {
     text-align: center;
-    color: #3EBDCD;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* Change button color on hover and active */
-button:hover, button:focus {
-    background-color: #00ACC1 !important;  /* Background color on hover and focus */
-    color: white !important;  /* Text color on hover and focus */
-    border: 2px solid #00ACC1 !important;  /* Border color on hover and focus */
-}
-
-/* Change select box color and border on focus */
-[data-testid="stSelectbox"]:focus > div > div > div {
-    background-color: #00ACC1 !important;  /* Background color when focused */
-    color: white !important;  /* Text color when focused */
-    border: 2px solid #00ACC1 !important;  /* Border color when focused */
-}
-
-/* Change dropdown list color on focus */
-[data-testid="stSelectbox"] > div > div > div > div:focus {
-    background-color: #00ACC1 !important;  /* Background color when focused */
-    color: white !important;  /* Text color when focused */
-    border: 2px solid #00ACC1 !important;  /* Border color when focused */
-}
-
-/* Change the default border color for select boxes */
-[data-testid="stSelectbox"]:active > div > div > div {
-    border: 2px solid #00ACC1 !important;  /* Default border color */
-}
-
-[data-testid="stSelectbox"]:focus > div > div > div {
-    border: 2px solid #00ACC1 !important;  /* Default border color */
-}
-
-/* Change dropdown arrow color */
-[data-testid="stSelectbox"] > div > div > div > div > div > svg {
-    fill: white;  /* Change arrow color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -184,24 +131,16 @@ def calculate_annual_cases(df):
 annual_cases_df = calculate_annual_cases(weekly_df)
 
 # Sidebar filter for year
-with st.sidebar:
-    # Add vertical space in the sidebar
-    st.write("")  # First blank line
-    st.write("")  # Second blank line
-    st.write("")  # Third blank line
-    st.write("")  # Fourth blank line
-    st.write("")  # Fifth blank line
+#selected_year = st.sidebar.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
 
-    # Now add the selectbox
-    selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
+# Filter data based on the selected year
+#filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
 
-    # Now add the selectbox
-    #selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
-
-selected_region = st.sidebar.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
+# Sidebar filter for region
+#selected_region = st.sidebar.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
 
 # Filter data based on the selected region
-region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+#region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
 
 # Function to create a color scale based on the number of cases
 def get_color(cases, max_cases):
@@ -264,7 +203,6 @@ def plot_time_series():
     ax.set_title(f'{selected_region} District')
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
-    plt.gca().set_facecolor('black')
     plt.grid(True)
     st.pyplot(fig)
 
@@ -444,42 +382,33 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Streamlit layout
+st.title("Local Leptospirosis Cases (From 2007 - Present)")
 st.write("")
 st.write("")
 
+# Create the first row: Year filter and map
+col1, col2 = st.columns([1, 4])
+with col1:
+    selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
+with col2:
+    # Filter data based on the selected year
+    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+    # Create and display the map for the selected year
+    st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
+    sri_lanka_map = create_sri_lanka_map(filtered_data)
+    folium_static(sri_lanka_map)
+    
 # Find the district with the maximum number of cases for the selected year
 max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
 district_with_max_cases = max_cases_row['Region']
 max_cases = max_cases_row['Cases']
 
-# Create the first row: Year filter and map
-st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
-
-# Create the first row: Year filter and map
-col1, col2 = st.columns([4, 1])
-with col1:
-    #selected_year = st.selectbox("Select a Year", sorted(annual_cases_df['Year'].unique()))
-    # Filter data based on the selected year
-    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
-    # Create and display the map for the selected year
-    sri_lanka_map = create_sri_lanka_map(filtered_data)
-    folium_static(sri_lanka_map)
-with col2:
-    # Display a note in col1
-        st.markdown(f"<h4 style='font-size: 20px; color:white;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
-        st.markdown(
-            f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
-            unsafe_allow_html=True
-        )
-    
 # Display a note in the sidebar
-#st.sidebar.markdown(f"<h4 style='font-size: 20px; color:white;'>Important</h4>", unsafe_allow_html=True)  # Change color to your desired color
-#st.sidebar.markdown(
-    #f"<p style='font-size: 20px; color:#3EBDCD;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
-    #unsafe_allow_html=True
-#)
-
-st.subheader("Annual District-wise Leptospirosis Cases")
+st.sidebar.markdown(f"<h4 style='font-size: 20px;'>Important</h4>", unsafe_allow_html=True)
+st.sidebar.markdown(
+    f"<p style='font-size: 20px;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
+    unsafe_allow_html=True
+)
 
 # Create the second row: District filter and time series plot
 col3, col4 = st.columns([1, 4])  # Adjust the width ratio as needed
@@ -487,10 +416,14 @@ col3, col4 = st.columns([1, 4])  # Adjust the width ratio as needed
 # Place the district filter close to the time series
 with col3:
     selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
+with col4:
     # Filter data based on the selected region
     region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
+    st.subheader("Annual District-wise Leptospirosis Cases")
     plot_time_series()
+
+
 
 # Display yearly cases
 st.subheader("Annual Leptospirosis Cases in Sri Lanka")
