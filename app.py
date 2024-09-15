@@ -495,7 +495,6 @@ def prepare_annual_district_data(df):
 
 # Streamlit layout
 st.write("")
-st.write("")
 
 st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
 # Create two columns for layout
@@ -579,7 +578,7 @@ if st.button("Show Annual Forecast"):
     # Check for high forecast values
     if any(future_forecast.flatten() > 1000):
         st.sidebar.markdown(
-            "<p style='color:red; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more years!</p>",
+            "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more years!</p>",
             unsafe_allow_html=True
         )
     
@@ -628,6 +627,6 @@ if st.button("Show Weekly Forecast"):
     # Check for high forecast values
     if any(future_forecast.flatten() > 100):
         st.sidebar.markdown(
-            "<p style='color:red; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more weeks!</p>",
+            "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more weeks!</p>",
             unsafe_allow_html=True
         )
