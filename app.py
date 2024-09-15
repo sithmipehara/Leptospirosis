@@ -19,24 +19,6 @@ from PIL import Image
 # Set the page configuration at the very beginning
 st.set_page_config(layout='wide')
 
-# Set the background image URL
-background_image_path = "C:\\Users\\User\\Desktop\\Leptospirosis\\images\\hero-bg.jpg"
-# Inject CSS to set the background image
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url('file://{background_image_path}');
-        background-size: cover;  /* Cover the entire background */
-        background-repeat: no-repeat;  /* Do not repeat the image */
-        background-position: center;  /* Center the image */
-        height: 100vh;  /* Ensures the background covers the entire viewport height */
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Main content
 # Inject custom CSS to change font size and color for specific title and content
 st.markdown("""
