@@ -464,8 +464,6 @@ def prepare_annual_district_data(df):
 # Streamlit layout
 st.write("")
 st.write("")
-st.write("")
-st.write("")
 
 # Find the district with the maximum number of cases for the selected year
 max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
@@ -501,16 +499,22 @@ with col2:
 
 st.subheader("Annual District-wise Leptospirosis Cases")
 
+# Filter data based on the selected region
+region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+
+# Display the time series plot (assuming plot_time_series is defined)
+plot_time_series()
+
 # Create the second row: District filter and time series plot
-col3, col4 = st.columns([1,0])  # Adjust the width ratio as needed
+#col3, col4 = st.columns([1,0])  # Adjust the width ratio as needed
     
 # Place the district filter close to the time series
-with col3:
+#with col3:
     #selected_region = st.selectbox("Select a District", sorted(annual_cases_df['Region'].unique()))
     # Filter data based on the selected region
-    region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
+    #region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     # Display the time series plot
-    plot_time_series()
+    #plot_time_series()
 
 
 # Display yearly cases
