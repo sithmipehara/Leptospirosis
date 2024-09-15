@@ -19,7 +19,7 @@ from PIL import Image
 st.set_page_config(layout='wide')
 
 # Load the image
-image = Image.open('blob:https://github.com/907c2a83-cb98-404b-b66d-e25a512ba0dd')
+image = Image.open("https://www.metropolisindia.com/upgrade/blog/upload/2022/11/Infectious-Disease_-Symptoms-Causes-Types-_-Treatment.png", use_column_width=True)
 
 # Display the image as the background
 st.markdown(
