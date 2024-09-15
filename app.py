@@ -20,7 +20,7 @@ from PIL import Image
 st.set_page_config(layout='wide')
 
 # Set the background image URL
-background_image_url = "C:\\Users\\User\\Desktop\\Leptospirosis\\images\\hero-bg.jpg"
+background_image_path = "C:\\Users\\User\\Desktop\\Leptospirosis\\images\\hero-bg.jpg"
 # Inject CSS to set the background image
 st.markdown(
     f"""
