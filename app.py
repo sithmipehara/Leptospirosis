@@ -61,6 +61,7 @@ p {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks 
+st.image("https://www.news.lk/media/k2/items/cache/3cfd4ff673c93395fd580159a9616109_XL.jpg", caption="Sunrise by the mountains")
 st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
@@ -490,8 +491,6 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Streamlit layout
-st.title(f"🦁 Local Leptospirosis Cases (From 2007 - Present)")
-
 st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
 # Create two columns for layout
 col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
