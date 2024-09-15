@@ -494,8 +494,6 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Streamlit layout
-st.write("")
-
 st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
 # Create two columns for layout
 col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
