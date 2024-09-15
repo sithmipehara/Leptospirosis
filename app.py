@@ -61,9 +61,8 @@ p {
 """, unsafe_allow_html=True)
 
 # Display the title using Markdown to allow line breaks 
-# URL of the image
-image_url = 'https://raw.githubusercontent.com/sithmipehara/Leptospirosis/main/Leptospirosis/images/t3.jpg'  # Replace with your image URL
-st.image(image_url, caption='Your Image Caption', width=300)  # Display the image
+st.title("🦁 Local Leptospirosis Cases (From 2007 - Present)")
+
 st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
