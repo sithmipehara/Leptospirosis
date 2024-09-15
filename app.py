@@ -426,6 +426,11 @@ def prepare_annual_district_data(df):
 st.title("Local Leptospirosis Cases (From 2007 - Present)")
 st.write("")
 st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
 
 # Create the first row: Year filter and map
 col1, col2 = st.columns([1, 4])
