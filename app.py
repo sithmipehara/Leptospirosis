@@ -390,6 +390,7 @@ def plot_top_districts(filtered_data):
 # Create a time series plot for the selected region
 def plot_time_series():
     fig, ax = plt.subplots(figsize=(12, 6))
+    plt.style.use('dark_background')
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
@@ -405,7 +406,7 @@ def plot_yearly_cases():
     SriLanka_cases = SriLanka_data.groupby('Year')['Cases'].sum().reset_index()
     
     plt.figure(figsize=(12, 6))
-    #plt.style.use('dark_background')  # Set dark theme
+    plt.style.use('dark_background')  # Set dark theme
     plt.plot(SriLanka_cases['Year'], SriLanka_cases['Cases'], marker='o', linestyle='-')
     
     plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
