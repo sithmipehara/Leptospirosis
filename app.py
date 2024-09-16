@@ -15,9 +15,22 @@ import json
 from matplotlib import cm, colors
 from streamlit_option_menu import option_menu
 from PIL import Image
+import altair as alt
+from datetime import datetime
 
 # Set the page configuration
 st.set_page_config(layout="wide")
+alt.themes.enable("dark")
+
+# Custom CSS to reduce top space
+st.markdown("""
+<style>
+.block-container {
+    padding-top: 0rem;  /* Adjust this value to reduce the top space */
+    padding-bottom: 1rem;  /* Optional: adjust bottom padding */
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Main content
 # Inject custom CSS to change font size and color for specific title and content
@@ -60,8 +73,6 @@ p {
 </style>
 """, unsafe_allow_html=True)
 
-# Display the title using Markdown to allow line breaks 
-st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
 
 # Custom CSS to change the background color of the sidebar and main area
 st.markdown("""
@@ -79,7 +90,7 @@ st.markdown("""
 st.markdown("""
 <style>
 h1 {
-    color: #679590;  /* Change this to your desired color */
+    color:  #ff8080;  /* Change this to your desired color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -89,7 +100,7 @@ st.markdown("""
 <style>
 h2, h3 {
     text-align: center ;
-    color:#B2DFDB;
+    color: #ff8080;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -181,6 +192,50 @@ SriLanka_data = pd.DataFrame(list(SriLanka_data_collection.find()))
 # Change 'Year' and 'PDF_ID' columns to integer type
 SriLanka_data['Year'] = SriLanka_data['Year'].astype(int)
 SriLanka_data['PDF_ID'] = SriLanka_data['PDF_ID'].astype(int)
+SriLanka_data['Cases'] = SriLanka_data['Cases'].fillna(0).astype(int)
+
+# Get the current year
+current_year = datetime.now().year
+
+# Calculate total cases for the current year
+total_cases_current_year = SriLanka_data[SriLanka_data['Year'] == current_year]['Cases'].sum()
+
+# Custom CSS for styling
+st.markdown("""
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+.metric-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222222; /* Light background */
+    color:#80CBC4; /* Text color */
+    padding: 30px;
+    margin: 0px 0;
+    font-size: 45px; /* Larger font size */
+    font-family: 'Playfair Display', serif; /* Change to Playfair Display font */
+    font-weight: bold; /* Make the font bold */
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Create two columns for the boxes
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown(f'<div class="metric-container"><center>Year<br> {current_year}</center></div>', unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f'<div class="metric-container"><center>Total Cases<br> {total_cases_current_year}</center></div>', unsafe_allow_html=True)
+    
+st.markdown(f"<h4 style='font-size: 20px;'></h4>", unsafe_allow_html=True)
+
+# Display the title using Markdown to allow line breaks 
+st.markdown("<h1 style='text-align: center;color:#FFFFFF;'>🦁Local Leptospirosis Cases<br>(From 2007 - Present)</h1>", unsafe_allow_html=True)
+
+st.markdown(f"<h4 style='font-size: 20px;'></h4>", unsafe_allow_html=True)
 
 # District coordinates (assuming these are accurate)
 district_coordinates = {
@@ -301,13 +356,44 @@ def create_sri_lanka_map(filtered_data):
 
     return sri_lanka_map
 
+def plot_top_districts(filtered_data):
+    # Get the top 10 districts by cases
+    top_districts = filtered_data.nlargest(10, 'Cases')
+
+    # Create a DataFrame for displaying
+    top_districts_df = pd.DataFrame({
+        'District': top_districts['Region'],
+        'Cases': top_districts['Cases']
+    })
+
+    # Calculate the maximum number of cases for scaling the progress bars
+    max_cases = top_districts['Cases'].max()
+
+    # Create a progress bar for each row
+    top_districts_df['Progress Bar'] = top_districts_df.apply(
+        lambda row: f'<div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 5px 0;">'
+                     f'<div style="width: {(row["Cases"] / max_cases) * 100}%; background-color: #C2185B; height: 15px; border-radius: 5px;"></div>'
+                     f'</div>', axis=1)
+
+    # Display the header for the table
+    st.markdown("<h6>Top 10 Districts with Leptospirosis Cases</h6>", unsafe_allow_html=True)
+
+    # Create a formatted string for the table
+    table_html = "<table style='width: 80%;'><thead><tr><th>District</th><th>Progress Bar</th></tr></thead><tbody>"
+    for index, row in top_districts_df.iterrows():
+        table_html += f"<tr><td>{row['District']}</td><td>{row['Progress Bar']}</td></tr>"
+    table_html += "</tbody></table>"
+
+    # Render the table
+    st.markdown(table_html, unsafe_allow_html=True)
+        
 # Create a time series plot for the selected region
 def plot_time_series():
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
-    ax.set_title(f'{selected_region} District', color='#80CBC4')
+    ax.set_title(f'{selected_region} District', color='#ffb3b3')
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
     plt.grid(True, color='gray')
@@ -319,18 +405,19 @@ def plot_yearly_cases():
     SriLanka_cases = SriLanka_data.groupby('Year')['Cases'].sum().reset_index()
     
     plt.figure(figsize=(12, 6))
-    plt.style.use('dark_background')  # Set dark theme
+    #plt.style.use('dark_background')  # Set dark theme
     plt.plot(SriLanka_cases['Year'], SriLanka_cases['Cases'], marker='o', linestyle='-')
     
     plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     
-    plt.title('From 2007 - Present', color='#80CBC4')
+    plt.title('From 2007 - Present', color='#ffb3b3')
     plt.xlabel('Year', color='white')
     plt.ylabel('Cases', color='white')
     plt.xticks(SriLanka_cases['Year'])
     plt.grid(True, color='gray')
     plt.gca().set_facecolor('black')  # Set background color to black
     st.pyplot(plt)
+    
 
 # Function to plot weekly cases
 def plot_weekly_cases():
@@ -340,7 +427,7 @@ def plot_weekly_cases():
     plt.style.use('dark_background')  # Set dark theme
     plt.plot(SriLanka_data['PDF_ID'], SriLanka_data['Cases'], marker='', linestyle='-', label='Actual Cases')
     
-    plt.title('From 2007 - Present', color='#80CBC4')
+    plt.title('From 2007 - Present', color='#ffb3b3')
     plt.xlabel('Week', color='white')
     plt.ylabel('No. of Leptospirosis Cases', color='white')
     plt.grid(True, color='gray')
@@ -491,31 +578,43 @@ def prepare_annual_district_data(df):
 
 # Streamlit layout
 st.subheader(f"Leptospirosis Cases Distribution in Year {selected_year}")
-# Create two columns for layout
-col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
+st.write("")
 
-# Display the map in the first column
-with col1:
-    sri_lanka_map = create_sri_lanka_map(filtered_data)
-    folium_static(sri_lanka_map)
+# Create three columns for layout
+col1, col2 = st.columns([1, 1])  # Adjust the ratio as needed
 
 # Find the district with the maximum number of cases for the selected year
 max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
 district_with_max_cases = max_cases_row['Region']
 max_cases = max_cases_row['Cases']
 
-# Display the markdown note in the second column
+# Display the map in the second column
+with col1:
+    sri_lanka_map = create_sri_lanka_map(filtered_data)
+    folium_static(sri_lanka_map,width=500)
+
+# Add a vertical space between the map and the progress chart
+st.markdown("<br>", unsafe_allow_html=True)  # Add a line break for spacing
+
+# Display the horizontal bar chart in the third column
 with col2:
-    st.markdown(f"<h4 style='font-size: 20px;'></h4>", unsafe_allow_html=True)
-    st.markdown(
-        f"<p style='font-size: 20px;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
+    with st.container():
+        # Display the horizontal progress chart
+        plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
+        
+#st.markdown(f"<h4 style='font-size: 20px;'></h4>", unsafe_allow_html=True)
+st.markdown(
+        f"<p style='font-size: 18px;color: #ffffff;'>In the year <strong>{selected_year}</strong>, the district <strong>{district_with_max_cases}</strong> recorded the highest number of leptospirosis cases with a total of <strong>{max_cases}</strong> cases in Sri Lanka.</p>",
         unsafe_allow_html=True
     )
+    
+st.markdown(f"<h5 style='font-size: 20px;'></h5>", unsafe_allow_html=True)
 
+# Annual District-wise Leptospirosis Cases Time Series Plot
 st.subheader("Annual District-wise Leptospirosis Cases")
 plot_time_series()
 
-
+st.markdown(f"<h5 style='font-size: 20px;'></h5>", unsafe_allow_html=True)
 
 # Display yearly cases
 st.subheader("Annual Leptospirosis Cases in Sri Lanka")
@@ -575,6 +674,8 @@ if st.button("Show Annual Forecast"):
             "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 1000 for one or more years!</p>",
             unsafe_allow_html=True
         )
+        
+st.markdown(f"<h5 style='font-size: 20px;'></h5>", unsafe_allow_html=True)
     
 # Display weekly cases
 st.subheader("Weekly Leptospirosis Cases in Sri Lanka")
@@ -625,9 +726,10 @@ if st.button("Show Weekly Forecast"):
             unsafe_allow_html=True
         )
 
+st.markdown(f"<h5 style='font-size: 20px;'></h5>", unsafe_allow_html=True)
+
 # Custom title with specific class
 st.markdown('<p class="custom-title">Thank you for visiting our dashboard !!!</p>', unsafe_allow_html=True)
 
 # Custom main content with specific class
 st.markdown('<p class="custom-content">We appreciate your time and interest.</p>', unsafe_allow_html=True)
-
