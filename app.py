@@ -78,7 +78,7 @@ p {
 st.markdown("""
 <style>
 [data-testid="stSidebar"] {
-    background-color: #0A3236;  /* Change this to your desired sidebar color */
+    background-color: #222222;  /* Change this to your desired sidebar color */
 }
 [data-testid="stAppViewContainer"] {
     background-color: #000000;  /* Change this to your desired main background color */
@@ -90,7 +90,7 @@ st.markdown("""
 st.markdown("""
 <style>
 h1 {
-    color:  #ff8080;  /* Change this to your desired color */
+    color:  #ffd480;  /* Change this to your desired color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -100,7 +100,7 @@ st.markdown("""
 <style>
 h2, h3 {
     text-align: center ;
-    color: #ff8080;
+    color: #ffd480;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -110,28 +110,28 @@ st.markdown("""
 <style>
 /* Change button color on hover and active */
 button:hover, button:focus {
-    background-color: #00796B !important;  /* Background color on hover and focus */
+    background-color:  #809fff !important;  /* Background color on hover and focus */
     color: white !important;  /* Text color on hover and focus */
     border: 2px solid #00796B !important;  /* Border color on hover and focus */
 }
 
 /* Change select box color on focus */
 [data-testid="stSelectbox"]:active > div > div > div {
-    background-color: #00796B !important;  /* Background color when focused */
+    background-color:  #809fff !important;  /* Background color when focused */
     color: white !important;  /* Text color when focused */
     border: 2px solid #00796B !important;  /* Border color when focused */
 }
 
 /* Change dropdown list color on focus */
 [data-testid="stSelectbox"] > div > div > div > div:focus {
-    background-color: #00796B !important;  /* Background color when focused */
+    background-color:  #809fff !important;  /* Background color when focused */
     color: white !important;  /* Text color when focused */
     border: 2px solid #00796B !important;  /* Border color when focused */
 }
 
 /* Change the default border color for select boxes */
 [data-testid="stSelectbox"] > div > div > div {
-    border: 1px solid #00796B;  /* Default border color */
+    border: 1px solid  #809fff;  /* Default border color */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -210,13 +210,14 @@ st.markdown("""
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #222222; /* Light background */
-    color:#80CBC4; /* Text color */
-    padding: 30px;
+    color: black; /* Text color */
+    padding: 20px;
     margin: 0px 0;
-    font-size: 45px; /* Larger font size */
+    font-size: 30px; /* Larger font size */
     font-family: 'Playfair Display', serif; /* Change to Playfair Display font */
     font-weight: bold; /* Make the font bold */
+    border-radius: 50px;
+    
 }
 </style>
 """, unsafe_allow_html=True)
@@ -225,10 +226,10 @@ st.markdown("""
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown(f'<div class="metric-container"><center>Year<br> {current_year}</center></div>', unsafe_allow_html=True)
-
+    st.markdown(f'<div class="metric-container" style="background-color:#99b3ff;"><center>Present Year<br> {current_year}</center></div>', unsafe_allow_html=True)
+    
 with col2:
-    st.markdown(f'<div class="metric-container"><center>Total Cases<br> {total_cases_current_year}</center></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-container" style="background-color:#ffd480;"><center>Total Number of Cases<br> {total_cases_current_year}</center></div>', unsafe_allow_html=True)
     
 st.markdown(f"<h4 style='font-size: 20px;'></h4>", unsafe_allow_html=True)
 
@@ -372,7 +373,7 @@ def plot_top_districts(filtered_data):
     # Create a progress bar for each row
     top_districts_df['Progress Bar'] = top_districts_df.apply(
         lambda row: f'<div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 5px 0;">'
-                     f'<div style="width: {(row["Cases"] / max_cases) * 100}%; background-color: #C2185B; height: 15px; border-radius: 5px;"></div>'
+                     f'<div style="width: {(row["Cases"] / max_cases) * 100}%; background-color:  #809fff; height: 15px; border-radius: 5px;"></div>'
                      f'</div>', axis=1)
 
     # Display the header for the table
@@ -394,7 +395,7 @@ def plot_time_series():
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
-    ax.set_title(f'{selected_region} District', color='#ffb3b3')
+    ax.set_title(f'{selected_region} District', color='#ffe6b3')
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
     plt.grid(True, color='gray')
@@ -411,7 +412,7 @@ def plot_yearly_cases():
     
     plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     
-    plt.title('From 2007 - Present', color='#ffb3b3')
+    plt.title('From 2007 - Present', color='#ffe6b3')
     plt.xlabel('Year', color='white')
     plt.ylabel('Cases', color='white')
     plt.xticks(SriLanka_cases['Year'])
@@ -428,7 +429,7 @@ def plot_weekly_cases():
     plt.style.use('dark_background')  # Set dark theme
     plt.plot(SriLanka_data['PDF_ID'], SriLanka_data['Cases'], marker='', linestyle='-', label='Actual Cases')
     
-    plt.title('From 2007 - Present', color='#ffb3b3')
+    plt.title('From 2007 - Present', color='#ffe6b3')
     plt.xlabel('Week', color='white')
     plt.ylabel('No. of Leptospirosis Cases', color='white')
     plt.grid(True, color='gray')
@@ -672,7 +673,7 @@ if st.button("Show Annual Forecast"):
     # Check for high forecast values
     if any(future_forecast.flatten() > 1000):
         st.sidebar.markdown(
-            "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 1000 for one or more years!</p>",
+            "<p style='color:#ff9999; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 1000 for one or more years!</p>",
             unsafe_allow_html=True
         )
         
@@ -723,7 +724,7 @@ if st.button("Show Weekly Forecast"):
     # Check for high forecast values
     if any(future_forecast.flatten() > 100):
         st.sidebar.markdown(
-            "<p style='color:yellow; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more weeks!</p>",
+            "<p style='color:#ff9999; font-size: 20px;'>⚠️ Warning: Forecasted cases exceed 100 for one or more weeks!</p>",
             unsafe_allow_html=True
         )
 
