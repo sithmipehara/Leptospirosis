@@ -523,18 +523,18 @@ with col5:
 with col6:
     highest_year = annual_cases_df.loc[annual_cases_df['Cases'].idxmax(), 'Year']
     highest_year_data = annual_cases_df[annual_cases_df['Year'] == highest_year]
-    st.markdown(f"<div class='chart-container'><h5 style='text-align: center;'>Percentage of Highest Cases in {highest_year} </h5>", unsafe_allow_html=True)
     st.write(" ")
     st.write(" ")
+    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year} </h6>", unsafe_allow_html=True)
     donut_chart_highest_year = create_donut_chart(highest_year_data, highest_year)
     st.altair_chart(donut_chart_highest_year)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
     current_year_data = annual_cases_df[annual_cases_df['Year'] == current_year]
-    st.markdown(f"<div class='chart-container'><h5 style='text-align: center;'>Percentage of Highest Cases in {current_year}</h5>", unsafe_allow_html=True)
     st.write(" ")
     st.write(" ")
+    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {current_year}</h6>", unsafe_allow_html=True)
     donut_chart_current_year = create_donut_chart(current_year_data, current_year)
     st.altair_chart(donut_chart_current_year)
     st.markdown("</div>", unsafe_allow_html=True)
