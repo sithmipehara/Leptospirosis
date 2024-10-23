@@ -440,7 +440,7 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Create columns with different widths
-col1, col2, col3 = st.columns(3)  
+col1, col2, col3 = st.columns([1, 2, 1])  
 
 with col1:
     st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
