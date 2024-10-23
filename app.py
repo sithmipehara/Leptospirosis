@@ -33,7 +33,7 @@ st.markdown("""
     font-weight: bold;
 }
 
-.box1 { background-color: #ff4d4d;color: #000000; }
+.box1 { background-color: #ff8080;color: #000000; }
 .box2 { background-color: #668cff;color: #000000; }
 .box3 { background-color: #ffcc66; color:#000000;}
 .box4 { background-color: #ffd480;color: #000000; }
@@ -450,9 +450,9 @@ def create_donut_chart(data, year_label):
     })
 
     # Donut chart base with border for transparent area
-    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=70, stroke='#99b3ff', strokeWidth=2).encode(
+    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=75, stroke='#ffcc66', strokeWidth=2).encode(
         theta=alt.Theta(field="Count", type="quantitative"),
-        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)']),
+        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
                         legend=None),
         tooltip=["Attrition", "Count"]
     ).properties(width=300, height=300)
@@ -465,6 +465,7 @@ def create_donut_chart(data, year_label):
         align='center',
         baseline='middle',
         size=20,
+        fontsize=22,
         color='white'
     ).encode(
         text='text1:N'
@@ -478,6 +479,7 @@ def create_donut_chart(data, year_label):
         baseline='middle',
         dy=20,  # Adjust vertical position
         size=20,
+        fontsize=22,
         color='white'
     ).encode(
         text='text:N'
