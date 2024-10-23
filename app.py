@@ -483,8 +483,8 @@ def create_donut_chart(data, year_label):
         text='text:N'
     )
 
-# Combine the donut chart and center text
-return (donut_chart + center_text + percentage_text).configure_view(stroke=None)
+    # Combine the donut chart and center text
+    return (donut_chart + center_text + percentage_text).configure_view(stroke=None)
     
 # Create columns with different widths
 col1, col2, col3 = st.columns([1, 2, 2]) 
