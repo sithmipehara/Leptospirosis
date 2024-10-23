@@ -473,7 +473,7 @@ def create_donut_chart(data, year_label):
         color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
                         legend=None),
         tooltip=["Attrition", "Count"]
-    ).properties(width=300, height=300)
+    ).properties(width=300, height=300,background='transparent')
 
     # Center text overlay (total count)
     center_text = alt.Chart(pd.DataFrame({
@@ -484,7 +484,7 @@ def create_donut_chart(data, year_label):
         baseline='middle',
         size=25,
         dy=-10,
-        color='white',
+        color='white',background='transparent'
     ).encode(
         text='text1:N'
     )
@@ -497,7 +497,7 @@ def create_donut_chart(data, year_label):
         baseline='middle',
         size=32,
         dy=20,
-        color='white',
+        color='white',background='transparent'
         fontWeight='bold'
     ).encode(
         text='text:N'
@@ -661,49 +661,3 @@ st.markdown('<p class="custom-title">Thank you for visiting our dashboard !!!</p
 
 # Custom main content with specific class
 st.markdown('<p class="custom-content">We appreciate your time and interest.</p>', unsafe_allow_html=True)
-
-
-# Create a footer with icons
-footer = st.container()
-with footer:
-    # Create two columns for the icons
-    col1, col2 = st.columns(2)
-
-    # Place icons in each column using HTML
-    with col1:
-        if st.markdown('<a href="#" style="color:white; text-decoration:none; font-size: 24px;">🏠</a>', unsafe_allow_html=True):
-            selected = "Home"
-            # Add logic for Home page here
-            st.write("You selected Home.")
-
-    with col2:
-        if st.markdown('<a href="#" style="color:white; text-decoration:none; font-size: 24px;">📊</a>', unsafe_allow_html=True):
-            selected = "Global Dashboard"
-            # Add logic for Global Dashboard here
-            st.write("You selected Global Dashboard.")
-
-# Optional: Style the footer
-st.markdown(
-    """
-    <style>
-    .stContainer {
-        background-color: #111;
-        padding: 10px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        text-align: center;
-    }
-    a {
-        padding: 10px 15px;
-        color: white;
-        font-size: 20px;
-    }
-    a:hover {
-        background-color: #555;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
