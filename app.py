@@ -438,6 +438,38 @@ def prepare_annual_district_data(df):
     annual_district_data = df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
     return annual_district_data
 
+def create_donut_chart(data, year_label):
+    # Calculate total and max cases for the donut chart
+    total_cases = data['Cases'].sum()
+    max_cases = data['Cases'].max()
+    
+    # Prepare data for Altair chart
+    response_data = pd.DataFrame({
+        'Attrition': ['Max Cases', 'Other Cases'],
+        'Count': [max_cases, total_cases - max_cases]
+    })
+
+    # Donut chart base
+    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=60).encode(
+        theta=alt.Theta(field="Count", type="quantitative"),
+        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)']),
+                        legend=alt.Legend(orient="top", direction="horizontal")),
+        tooltip=["Attrition", "Count"]
+    ).properties(width=300, height=300)
+
+    # Center text overlay (total count)
+    center_text = alt.Chart(pd.DataFrame({'text': [f"{year_label}\n{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]})).mark_text(
+        align='center',
+        baseline='middle',
+        size=20,
+        color='white'
+    ).encode(
+        text='text:N'
+    )
+
+    # Combine the donut chart and center text
+    return (donut_chart + center_text).configure_view(stroke=None)
+    
 # Create columns with different widths
 col1, col2, col3 = st.columns([1, 2, 2]) 
 
@@ -464,31 +496,6 @@ with col3:
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     st.markdown("</div>", unsafe_allow_html=True)
 
-def plot_donut_chart(cases_data, year_label):
-    if cases_data.empty or cases_data['Cases'].sum() == 0:
-        st.warning(f"No data available for {year_label}.")
-        return
-    
-    max_cases = cases_data['Cases'].max()
-    total_cases = cases_data['Cases'].sum()
-    
-    sizes = [max_cases, total_cases - max_cases] if total_cases > 0 else [0, 1]
-    colors = ['#99b3ff', 'rgba(0, 0, 0, 0)']
-    
-    fig, ax = plt.subplots(figsize=(8, 8), facecolor='none')
-    
-    wedges, texts = ax.pie(sizes, colors=colors, startangle=90, counterclock=False,
-                           wedgeprops=dict(width=0.3))
-    
-    centre_circle = plt.Circle((0, 0), 0.70, fc='black') 
-    fig.gca().add_artist(centre_circle)
-    
-    percentage = (max_cases / total_cases * 100) if total_cases > 0 else 0
-    ax.text(0, 0, f"{year_label}\n{percentage:.1f}%", horizontalalignment='center',
-            verticalalignment='center', fontsize=22, color='#99b3ff')
-    
-    ax.set_title(f'Percentage of Cases in {year_label}', fontsize=16)
-
 # Additional Row for New Graphs
 col5, col6, col7 = st.columns([2,1,1])  
     
@@ -504,7 +511,9 @@ with col6:
     highest_year = annual_cases_df.loc[annual_cases_df['Cases'].idxmax(), 'Year']
     highest_year_data = annual_cases_df[annual_cases_df['Year'] == highest_year]
     
-    plot_donut_chart(highest_year_data, highest_year)
+    donut_chart_highest_year = create_donut_chart(highest_year_data, highest_year)
+    
+    st.altair_chart(donut_chart_highest_year)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
@@ -514,5 +523,7 @@ with col7:
     st.write(" ")
     current_year_data = annual_cases_df[annual_cases_df['Year'] == current_year]
     
-    plot_donut_chart(current_year_data, current_year)
+    donut_chart_current_year = create_donut_chart(current_year_data, current_year)
+    
+    st.altair_chart(donut_chart_current_year)
     st.markdown("</div>", unsafe_allow_html=True)
