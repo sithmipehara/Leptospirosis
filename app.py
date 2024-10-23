@@ -440,7 +440,7 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Create columns with different widths
-col1, col2, col3 = st.columns(3)  
+col1, col2, col3, col4 = st.columns(4)  
 
 # First column: Metrics containers stacked vertically
 with col1:
