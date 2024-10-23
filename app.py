@@ -181,7 +181,7 @@ def get_color(cases, max_cases):
 
 def create_sri_lanka_map(filtered_data):
     # Create a base map centered on Sri Lanka
-    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=6)
+    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=7)
 
     # Get the maximum number of cases for scaling the color
     max_cases = filtered_data['Cases'].max()
@@ -241,7 +241,7 @@ def plot_top_districts(filtered_data):
     st.markdown("<h6>Top 10 Districts with Leptospirosis Cases</h6>", unsafe_allow_html=True)
 
     # Create a formatted string for the table
-    table_html = "<table style='width: 80%;'><thead><tr><th>District</th><th>Progress Bar</th></tr></thead><tbody>"
+    table_html = "<table style='width: 90%;'><thead><tr><th>District</th><th>Progress Bar</th></tr></thead><tbody>"
     for index, row in top_districts_df.iterrows():
         table_html += f"<tr><td>{row['District']}</td><td>{row['Progress Bar']}</td></tr>"
     table_html += "</tbody></table>"
