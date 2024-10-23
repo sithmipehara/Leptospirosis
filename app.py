@@ -57,7 +57,7 @@ st.markdown("""
 .stSelectbox {
     transition: background-color 0.3s;
     line-height: 50px;
-    height:150px;
+    height:100px;
     text-align: center;
     background-color: #3c3c44; /* Change this to your desired color */
     border-radius: 20px; /* Optional: rounded corners */
@@ -453,7 +453,7 @@ with col1:
 with col2:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
     sri_lanka_map = create_sri_lanka_map(filtered_data)
-    folium_static(sri_lanka_map,width=500)
+    folium_static(sri_lanka_map,width=500,height=500)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col3:
