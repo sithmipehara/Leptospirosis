@@ -76,8 +76,37 @@ st.markdown("""
     text-align: center ;/* Change to your desired font color for content */
 }
 
+[data-testid="stSidebar"] {
+    background-color: #222222;  /* Change this to your desired sidebar color */
+}
+[data-testid="stAppViewContainer"] {
+    background-color: #000000;  /* Change this to your desired main background color */
+}
+
 </style>
 """, unsafe_allow_html=True)
+
+# Sidebar navigation using option_menu
+with st.sidebar:
+    selected = option_menu("Navigation", 
+                           ["Home", "Global Dashboard"],
+                           icons=['house', 'bar-chart'],
+                           menu_icon="cast",  # Optional: icon for the menu title
+                           default_index=0,
+                           styles={
+                               "container": {"padding": "5!important", "background-color": "#111"},
+                               "icon": {"color": "white", "font-size": "20px"},
+                               "nav-link": {
+                                   "font-size": "16px",
+                                   "text-align": "left",
+                                   "margin": "0px",
+                                   "padding": "10px 15px",
+                                   "color": "white",
+                                   "background-color": "#111"
+                               },
+                               "nav-link-selected": {"background-color": "#555"},
+                           }
+    )
 
 # MongoDB connection details
 mongo_url = "mongodb+srv://sithmi_pehara:genius2000@cluster0.y5lkbfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
