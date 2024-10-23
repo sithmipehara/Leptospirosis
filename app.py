@@ -181,7 +181,7 @@ def get_color(cases, max_cases):
 
 def create_sri_lanka_map(filtered_data):
     # Create a base map centered on Sri Lanka
-    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=6.5)
+    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=6)
 
     # Get the maximum number of cases for scaling the color
     max_cases = filtered_data['Cases'].max()
