@@ -458,6 +458,7 @@ with col2:
     
 with col3:
     st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
+    st.write(" ")
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     st.markdown("</div>", unsafe_allow_html=True)
 
