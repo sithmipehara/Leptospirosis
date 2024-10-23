@@ -56,8 +56,9 @@ st.markdown("""
 
 .stSelectbox {
     transition: background-color 0.3s;
-    line-height: 50px;
-    height: 150px; 
+    line-height: 10px;
+    height: 50px; 
+    width: 50px; 
     text-align: center;
     background-color: #3c3c44; /* Change this to your desired color */
     border-radius: 20px; /* Optional: rounded corners */
@@ -457,6 +458,12 @@ with col2:
     
 with col3:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
+    selected_year = st.sidebar.selectbox("**Select a Year**", sorted(annual_cases_df['Year'].unique()))
+    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
+    st.sidebar.markdown("<br>", unsafe_allow_html=True)  # Add a line break for spacing
+    st.sidebar.markdown("<br>", unsafe_allow_html=True)
+    selected_region = st.sidebar.selectbox("**Select a District**", sorted(annual_cases_df['Region'].unique()))
+    region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     plot_time_series()
     st.markdown("</div>", unsafe_allow_html=True)
 
