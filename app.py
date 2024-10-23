@@ -33,7 +33,7 @@ st.markdown("""
     font-weight: bold;
 }
 
-.box1 { background-color: #99b3ff;color: #000000; }
+.box1 { background-color: #ff4d4d;color: #000000; }
 .box2 { background-color: #668cff;color: #000000; }
 .box3 { background-color: #ffcc66; color:#000000;}
 .box4 { background-color: #ffd480;color: #000000; }
@@ -464,8 +464,35 @@ with col3:
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     st.markdown("</div>", unsafe_allow_html=True)
 
+def plot_donut_chart(cases_data, year_label):
+    # Calculate the maximum cases and current year cases
+    max_cases = cases_data['Cases'].max()
+    
+    # Prepare data for the donut chart
+    sizes = [max_cases, cases_data['Cases'].sum() - max_cases]
+    colors = ['#99b3ff', 'rgba(0, 0, 0, 0)']  # Color for max cases and transparent for others
+    
+    # Create a donut chart
+    fig, ax = plt.subplots(figsize=(8, 8), facecolor='none')
+    
+    wedges, texts = ax.pie(sizes, colors=colors, startangle=90, counterclock=False,
+                           wedgeprops=dict(width=0.3))  # Create a donut shape
+    
+    # Draw a circle at the center of pie to make it look like a donut
+    centre_circle = plt.Circle((0, 0), 0.70, fc='black') 
+    fig.gca().add_artist(centre_circle)
+    
+    # Display year and percentage in the center
+    percentage = (max_cases / cases_data['Cases'].sum()) * 100 if cases_data['Cases'].sum() > 0 else 0
+    ax.text(0, 0, f"{year_label}\n{percentage:.1f}%", horizontalalignment='center',
+            verticalalignment='center', fontsize=22, color='#99b3ff')
+    
+    ax.set_title(f'Percentage of Cases in {year_label}', fontsize=16)
+
+    st.pyplot(fig)
+
 # Additional Row for New Graphs
-col5, col6, col7 = st.columns(3)  
+col5, col6, col7 = st.columns([2,1,1])  
     
 with col5:
     st.markdown("<div class='chart-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
@@ -473,95 +500,23 @@ with col5:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col6:
-    st.markdown("<div class='chart-container'><h5 style='text-align: center;'>Annual Leptospirosis Cases</h5>", unsafe_allow_html=True)
-    plot_yearly_cases()
-    if st.button("Show Annual Forecast"):
-        predictions, future_forecast, mae, rmse, accuracy_percentage = forecast_annual_rnn()
+    st.markdown("<div class='chart-container'>", unsafe_allow_html=True)
+    st.write(" ")
+    st.write(" ")
+    # Get data for highest cases year
+    highest_year = region_data.loc[region_data['Cases'].idxmax(), 'Year']
+    highest_year_data = region_data[region_data['Year'] == highest_year]
     
-        # Plotting the annual forecast
-        annual_cases = SriLanka_data.groupby('Year')['Cases'].sum().reset_index()
-    
-        plt.figure(figsize=(12, 6))
-        plt.style.use('dark_background')  # Set dark theme
-        plt.plot(annual_cases['Year'], annual_cases['Cases'], marker='o', linestyle='-', label='Actual Annual Cases')
-    
-        forecast_years = np.arange(annual_cases['Year'].iloc[-1] + 1, annual_cases['Year'].iloc[-1] + 6)
-        plt.plot(forecast_years, future_forecast, marker='o', linestyle='-', label='Forecasted Annual Cases', color='orange')
-    
-        # Plot the predicted values
-        predicted_years = annual_cases['Year'].iloc[-len(predictions):].values
-        plt.plot(predicted_years, predictions, marker='o', linestyle='-', label='Predicted Annual Cases', color='green')
-    
-        plt.title('Annual Leptospirosis Cases with Forecast', color='#99b3ff')
-        plt.xlabel('Year', color='white')
-        plt.ylabel('No. of Leptospirosis Cases', color='white')
-        plt.grid(True, color='gray')
-    
-        # Assuming 'annual_cases' is a DataFrame with a 'Year' column
-        last_year = annual_cases['Year'].iloc[-1]
-        forecast_years = np.arange(last_year + 1, last_year + 6)  # 5 years of forecast
-        all_years = np.concatenate([annual_cases['Year'], forecast_years])
-        plt.xticks(all_years)
-        #plt.xticks(annual_cases['Year']+5)
-    
-        plt.legend()
-        plt.gca().set_facecolor('black')  # Set background color to black
-        st.pyplot(plt, transparent=True)
-    
-        # Display accuracy metrics
-        st.subheader("LSTM Model Accuracy Metrics for Annual Cases")
-        st.write(f"Mean Absolute Error (MAE): {mae:.2f}")
-        st.write(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
-        st.write(f"Test Accuracy Percentage: {accuracy_percentage:.2f}%")
+    plot_donut_chart(highest_year_data, highest_year)
 
-        # Display forecast values
-        st.subheader("Forecast for the Next 5 Years")
-        forecast_years_df = pd.DataFrame({
-           'Year': forecast_years,
-           'Forecasted Cases': future_forecast.flatten()
-        })
-        st.table(forecast_years_df)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
-    st.markdown("<div class='chart-container'><h5 style='text-align: center;'>Weekly Leptospirosis Cases</h5>", unsafe_allow_html=True)
-    plot_weekly_cases()
-
-    # Button to show weekly forecast
-    if st.button("Show Weekly Forecast"):
-        predictions, future_forecast, mae, rmse, accuracy_percentage = forecast_rnn()
+    st.markdown("<div class='chart-container'>", unsafe_allow_html=True)
+    st.write(" ")
+    st.write(" ")
+    current_year = datetime.now().year # Get current year from data
+    current_year_data = region_data[region_data['Year'] == current_year]
     
-        # Plotting the weekly forecast
-        plt.figure(figsize=(12, 6))
-        plt.style.use('dark_background')  # Set dark theme
-        plt.plot(SriLanka_data['PDF_ID'], SriLanka_data['Cases'], marker='', linestyle='-', label='Actual Cases')
-    
-        forecast_weeks = np.arange(len(SriLanka_data) + 1, len(SriLanka_data) + 13)
-        plt.plot(forecast_weeks, future_forecast, marker='', linestyle='-', label='Forecasted Cases', color='orange')
-    
-        # Plot the predicted values
-        predicted_weeks = np.arange(len(SriLanka_data) - len(predictions), len(SriLanka_data))
-        plt.plot(predicted_weeks, predictions, marker='x', linestyle='-', label='Predicted Cases', color='green')
-    
-        plt.title('Weekly Leptospirosis Cases with Forecast', color='#99b3ff')
-        plt.xlabel('Week', color='white')
-        plt.ylabel('No. of Leptospirosis Cases', color='white')
-        plt.grid(True, color='gray')
-        plt.legend()
-        plt.gca().set_facecolor('black')  # Set background color to black
-        st.pyplot(plt, transparent=True)
-    
-        # Display accuracy metrics
-        st.subheader("LSTM Model Accuracy Metrics for Weekly Cases")
-        st.write(f"Mean Absolute Error (MAE): {mae:.2f}")
-        st.write(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
-        st.write(f"Test Accuracy Percentage: {accuracy_percentage:.2f}%")
-
-        # Display forecast values
-        st.subheader("Forecast for the Next 12 Weeks")
-        forecast_weeks_df = pd.DataFrame({
-            'Week': np.arange(len(SriLanka_data) + 1, len(SriLanka_data) + 13),
-            'Forecasted Cases': future_forecast.flatten()
-        })
-        st.table(forecast_weeks_df)
+    plot_donut_chart(current_year_data, current_year)
     st.markdown("</div>", unsafe_allow_html=True)
