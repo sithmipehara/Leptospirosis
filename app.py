@@ -104,16 +104,13 @@ SriLanka_data['Cases'] = SriLanka_data['Cases'].fillna(0).astype(int)
 # Header metrics
 current_year = datetime.now().year
 total_cases_current_year = SriLanka_data[SriLanka_data['Year'] == current_year]['Cases'].sum()
-max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
-district_with_max_cases = max_cases_row['Region']
-max_cases = max_cases_row['Cases']
 
 # Display the metrics
 col1, col2, col3, col4 = st.columns(4)
 col1.markdown(f"<div class='metric-box box1'>Country<br><span style='font-size: 24px;'>Sri Lanka</span></div>", unsafe_allow_html=True)
 col2.markdown(f"<div class='metric-box box2'>Present Year<br><span style='font-size: 24px;'>{current_year}</span></div>", unsafe_allow_html=True)
 col3.markdown(f"<div class='metric-box box3'>Total Number of Cases<br><span style='font-size: 24px;'>{total_cases_current_year}</span></div>", unsafe_allow_html=True)
-col4.markdown(f"<div class='metric-box box4'>District with Highest Number of Cases<br><span style='font-size: 24px;'>{district_with_max_cases}</span></div>", unsafe_allow_html=True)
+col4.markdown(f"<div class='metric-box box4'>District with Highest Number of Cases<br><span style='font-size: 24px;'>" "</span></div>", unsafe_allow_html=True)
 
 st.write(" ")
 st.write(" ")
