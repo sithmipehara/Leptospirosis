@@ -64,6 +64,18 @@ st.markdown("""
     padding: 10px; /* Optional: padding inside the selectbox */
 }
 
+.custom-title {
+    font-size: 36px;  /* Change to your desired font size */
+    color: #5cd6d6; 
+    text-align: center ;/* Change to your desired font color */
+}
+
+.custom-content {
+    font-size: 20px;   /* Change to your desired font size for content */
+    color: white;   
+    text-align: center ;/* Change to your desired font color for content */
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -502,7 +514,7 @@ with col1:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col2:
-    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
+    st.markdown(f"<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map,width=500,height=500)
     st.markdown("</div>", unsafe_allow_html=True)
@@ -637,4 +649,9 @@ with col9:
         })
         st.table(forecast_weeks_df)
     st.markdown("</div>", unsafe_allow_html=True)
-    
+
+# Custom title with specific class
+st.markdown('<p class="custom-title">Thank you for visiting our dashboard !!!</p>', unsafe_allow_html=True)
+
+# Custom main content with specific class
+st.markdown('<p class="custom-content">We appreciate your time and interest.</p>', unsafe_allow_html=True)
