@@ -20,10 +20,12 @@ from datetime import datetime
 
 # Set the theme to dark
 st.set_page_config(page_title="Local Leptospirosis Dashboard", layout="wide", initial_sidebar_state="expanded")
-alt.themes.enable("dark")
 
 st.markdown("""
 <style>
+.reportview-container {
+        background-color: #0E1117; 
+        
 /* Style for individual metric boxes */
 .metric-box {
     padding: 20px;
