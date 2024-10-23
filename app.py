@@ -253,9 +253,9 @@ def plot_time_series():
     fig, ax = plt.subplots(figsize=(12, 6), facecolor='none')
     plt.style.use('dark_background')
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
-    ax.set_xlabel('Year', fontsize=22)
-    ax.set_ylabel('Cases', fontsize=22)
-    ax.set_title(f'{selected_region} District', color='#99b3ff', fontsize=22)
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Cases')
+    ax.set_title(f'{selected_region} District', color='#99b3ff')
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
     plt.grid(True, color='gray')
@@ -558,7 +558,7 @@ with col8:
         plt.plot(annual_cases['Year'], annual_cases['Cases'], marker='o', linestyle='-', label='Actual Annual Cases')
     
         forecast_years = np.arange(annual_cases['Year'].iloc[-1] + 1, annual_cases['Year'].iloc[-1] + 6)
-        plt.plot(forecast_years, future_forecast, marker='o', linestyle='-', label='Forecasted Annual Cases', color='orange')
+        plt.plot(forecast_years, future_forecast, marker='o', linestyle='-', label='Forecasted Annual Cases', color=' #ff4d4d')
     
         # Plot the predicted values
         predicted_years = annual_cases['Year'].iloc[-len(predictions):].values
@@ -596,7 +596,7 @@ with col8:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col9:
-    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Weekly Leptospirosis Cases</h6>", unsafe_allow_html=True)
+    st.markdown("<div class='chart-container'><h5 style='text-align: center;'>Weekly Leptospirosis Cases</h5>", unsafe_allow_html=True)
     plot_weekly_cases()
 
     # Button to show weekly forecast
