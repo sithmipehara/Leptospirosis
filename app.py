@@ -181,7 +181,7 @@ def get_color(cases, max_cases):
 
 def create_sri_lanka_map(filtered_data):
     # Create a base map centered on Sri Lanka
-    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=4)
+    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=7)
 
     # Get the maximum number of cases for scaling the color
     max_cases = filtered_data['Cases'].max()
@@ -440,7 +440,7 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Create columns with different widths
-col1, col2, col3, col4 = st.columns(4)  
+col1, col2, col3, col4 = st.columns(1,2,2,2)  
 
 # First column: Metrics containers stacked vertically
 with col1:
