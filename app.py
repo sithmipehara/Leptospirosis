@@ -106,11 +106,10 @@ current_year = datetime.now().year
 total_cases_current_year = SriLanka_data[SriLanka_data['Year'] == current_year]['Cases'].sum()
 
 # Display the metrics
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3 = st.columns(3)
 col1.markdown(f"<div class='metric-box box1'>Country<br><span style='font-size: 24px;'>Sri Lanka</span></div>", unsafe_allow_html=True)
 col2.markdown(f"<div class='metric-box box2'>Present Year<br><span style='font-size: 24px;'>{current_year}</span></div>", unsafe_allow_html=True)
 col3.markdown(f"<div class='metric-box box3'>Total Number of Cases<br><span style='font-size: 24px;'>{total_cases_current_year}</span></div>", unsafe_allow_html=True)
-col4.markdown(f"<div class='metric-box box4'>District with Highest Number of Cases<br><span style='font-size: 24px;'>" "</span></div>", unsafe_allow_html=True)
 
 st.write(" ")
 st.write(" ")
@@ -458,6 +457,7 @@ with col2:
     
 with col3:
     st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
+    st.write(" ")
     st.write(" ")
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     st.markdown("</div>", unsafe_allow_html=True)
