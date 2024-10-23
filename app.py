@@ -251,8 +251,8 @@ def plot_top_districts(filtered_data):
         
 # Create a time series plot for the selected region
 def plot_time_series():
-    fig, ax = plt.subplots(figsize=(12, 6))
-    plt.style.use('dark_background')
+    fig, ax = plt.subplots(figsize=(20, 10))
+    plt.style.use('dark_background'20
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
@@ -465,6 +465,7 @@ with col3:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>progress chart</h5>", unsafe_allow_html=True)
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     
-
-
+with col4:
+    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
+    plot_time_series()
 
