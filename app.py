@@ -253,9 +253,9 @@ def plot_time_series():
     fig, ax = plt.subplots(figsize=(20, 10), facecolor='none')
     plt.style.use('dark_background')
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
-    ax.set_xlabel('Year')
-    ax.set_ylabel('Cases')
-    ax.set_title(f'{selected_region} District', color='#ffe6b3')
+    ax.set_xlabel('Year', fontsize=18)
+    ax.set_ylabel('Cases', fontsize=18)
+    ax.set_title(f'{selected_region} District', color='#99b3ff', fontsize=18)
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.xticks(region_data['Year'])
     plt.grid(True, color='gray')
@@ -272,7 +272,7 @@ def plot_yearly_cases():
     
     plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     
-    plt.title('From 2007 - Present', color='#ffe6b3')
+    plt.title('From 2007 - Present', color='#99b3ff')
     plt.xlabel('Year', color='white')
     plt.ylabel('Cases', color='white')
     plt.xticks(SriLanka_cases['Year'])
@@ -289,7 +289,7 @@ def plot_weekly_cases():
     plt.style.use('dark_background')  # Set dark theme
     plt.plot(SriLanka_data['PDF_ID'], SriLanka_data['Cases'], marker='', linestyle='-', label='Actual Cases')
     
-    plt.title('From 2007 - Present', color='#ffe6b3')
+    plt.title('From 2007 - Present', color='#99b3ff')
     plt.xlabel('Week', color='white')
     plt.ylabel('No. of Leptospirosis Cases', color='white')
     plt.grid(True, color='gray')
@@ -492,7 +492,7 @@ with col6:
         predicted_years = annual_cases['Year'].iloc[-len(predictions):].values
         plt.plot(predicted_years, predictions, marker='o', linestyle='-', label='Predicted Annual Cases', color='green')
     
-        plt.title('Annual Leptospirosis Cases with Forecast', color='#80CBC4')
+        plt.title('Annual Leptospirosis Cases with Forecast', color='#99b3ff')
         plt.xlabel('Year', color='white')
         plt.ylabel('No. of Leptospirosis Cases', color='white')
         plt.grid(True, color='gray')
@@ -506,7 +506,7 @@ with col6:
     
         plt.legend()
         plt.gca().set_facecolor('black')  # Set background color to black
-        st.pyplot(plt)
+        st.pyplot(plt, transparent=True)
     
         # Display accuracy metrics
         st.subheader("LSTM Model Accuracy Metrics for Annual Cases")
@@ -543,13 +543,13 @@ with col7:
         predicted_weeks = np.arange(len(SriLanka_data) - len(predictions), len(SriLanka_data))
         plt.plot(predicted_weeks, predictions, marker='x', linestyle='-', label='Predicted Cases', color='green')
     
-        plt.title('Weekly Leptospirosis Cases with Forecast', color='#80CBC4')
+        plt.title('Weekly Leptospirosis Cases with Forecast', color='#99b3ff')
         plt.xlabel('Week', color='white')
         plt.ylabel('No. of Leptospirosis Cases', color='white')
         plt.grid(True, color='gray')
         plt.legend()
         plt.gca().set_facecolor('black')  # Set background color to black
-        st.pyplot(plt)
+        st.pyplot(plt, transparent=True)
     
         # Display accuracy metrics
         st.subheader("LSTM Model Accuracy Metrics for Weekly Cases")
