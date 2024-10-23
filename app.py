@@ -562,7 +562,7 @@ with col8:
     
         # Plot the predicted values
         predicted_years = annual_cases['Year'].iloc[-len(predictions):].values
-        plt.plot(predicted_years, predictions, marker='o', linestyle='-', label='Predicted Annual Cases', color='green')
+        plt.plot(predicted_years, predictions, marker='o', linestyle='-', label='Predicted Annual Cases', color='yellow')
     
         plt.title('Annual Leptospirosis Cases with Forecast', color='#99b3ff')
         plt.xlabel('Year', color='white')
@@ -613,7 +613,7 @@ with col9:
     
         # Plot the predicted values
         predicted_weeks = np.arange(len(SriLanka_data) - len(predictions), len(SriLanka_data))
-        plt.plot(predicted_weeks, predictions, marker='x', linestyle='-', label='Predicted Cases', color='green')
+        plt.plot(predicted_weeks, predictions, marker='x', linestyle='-', label='Predicted Cases', color='yellow')
     
         plt.title('Weekly Leptospirosis Cases with Forecast', color='#99b3ff')
         plt.xlabel('Week', color='white')
