@@ -479,7 +479,7 @@ def create_donut_chart(data, year_label):
         align='center',
         baseline='middle',
         size=28,
-        dy=15,
+        dy=20,
         color='white',
         fontWeight='bold'
     ).encode(
