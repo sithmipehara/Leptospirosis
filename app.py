@@ -497,7 +497,7 @@ def create_donut_chart(data, year_label):
         baseline='middle',
         size=32,
         dy=20,
-        color='white',background='transparent'
+        color='white',background='transparent',
         fontWeight='bold'
     ).encode(
         text='text:N'
