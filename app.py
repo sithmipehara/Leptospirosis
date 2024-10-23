@@ -241,7 +241,7 @@ def create_sri_lanka_map(filtered_data):
     
 # Third column of charts in one container
 with col3:
-    def plot_top_districts(filtered_data):
+def plot_top_districts(filtered_data):
     # Get the top 10 districts by cases
     top_districts = filtered_data.nlargest(10, 'Cases')
 
