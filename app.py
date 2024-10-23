@@ -473,12 +473,11 @@ def create_donut_chart(data, year_label):
         color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
                         legend=None),
         tooltip=["Attrition", "Count"]
-    ).properties(width=300, height=300,background='transparent')
+    ).properties(width=300, height=300, background='transparent')
 
-    # Center text overlay (total count)
+    # Center text overlay (year label)
     center_text = alt.Chart(pd.DataFrame({
-        'text1': [year_label],
-        'text2': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+        'text1': [year_label]
     })).mark_text(
         align='center',
         baseline='middle',
@@ -504,7 +503,10 @@ def create_donut_chart(data, year_label):
     )
 
     # Combine the donut chart and center text
-    return (donut_chart + center_text + percentage_text).configure_view(stroke=None)
+    combined_chart = donut_chart + center_text + percentage_text
+    
+    # Ensure proper configuration
+    return combined_chart.configure_view(stroke=None)
     
 # Create columns with different widths
 col1, col2, col3 = st.columns([1, 2, 2]) 
