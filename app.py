@@ -440,7 +440,7 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Create columns with different widths
-col1, col2, col3 = st.columns([1, 1, 1]) 
+col1, col2, col3 = st.columns([1, 2, 2]) 
 
 with col1:
     st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
@@ -453,7 +453,7 @@ with col1:
 with col2:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
     sri_lanka_map = create_sri_lanka_map(filtered_data)
-    folium_static(sri_lanka_map,width=300)
+    folium_static(sri_lanka_map,width=500)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col3:
