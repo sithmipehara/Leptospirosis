@@ -558,7 +558,7 @@ with col8:
         plt.plot(annual_cases['Year'], annual_cases['Cases'], marker='o', linestyle='-', label='Actual Annual Cases')
     
         forecast_years = np.arange(annual_cases['Year'].iloc[-1] + 1, annual_cases['Year'].iloc[-1] + 6)
-        plt.plot(forecast_years, future_forecast, marker='o', linestyle='-', label='Forecasted Annual Cases', color=' #ff4d4d')
+        plt.plot(forecast_years, future_forecast, marker='o', linestyle='-', label='Forecasted Annual Cases', color=' orange')
     
         # Plot the predicted values
         predicted_years = annual_cases['Year'].iloc[-len(predictions):].values
