@@ -452,22 +452,39 @@ def create_donut_chart(data, year_label):
     # Donut chart base with border for transparent area
     donut_chart = alt.Chart(response_data).mark_arc(innerRadius=60, stroke='#99b3ff', strokeWidth=2).encode(
         theta=alt.Theta(field="Count", type="quantitative"),
-        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)'])),
+        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)']),
+                        legend=None),
         tooltip=["Attrition", "Count"]
     ).properties(width=300, height=300)
 
     # Center text overlay (total count)
-    center_text = alt.Chart(pd.DataFrame({'text': [f"{year_label}\n{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]})).mark_text(
+    center_text = alt.Chart(pd.DataFrame({
+        'text1': [year_label],
+        'text2': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+    })).mark_text(
         align='center',
         baseline='middle',
+        size=20,
+        color='white'
+    ).encode(
+        text='text1:N'
+    )
+
+    # Add another layer for the percentage
+    percentage_text = alt.Chart(pd.DataFrame({
+        'text': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+    })).mark_text(
+        align='center',
+        baseline='middle',
+        dy=20,  # Adjust vertical position
         size=20,
         color='white'
     ).encode(
         text='text:N'
     )
 
-    # Combine the donut chart and center text
-    return (donut_chart + center_text).configure_view(stroke=None)
+# Combine the donut chart and center text
+return (donut_chart + center_text + percentage_text).configure_view(stroke=None)
     
 # Create columns with different widths
 col1, col2, col3 = st.columns([1, 2, 2]) 
