@@ -467,7 +467,6 @@ def create_donut_chart(data, year_label):
         size=25,
         dy=-5,
         color='white',
-        fontWeight='bold'
     ).encode(
         text='text1:N'
     )
@@ -478,7 +477,7 @@ def create_donut_chart(data, year_label):
     })).mark_text(
         align='center',
         baseline='middle',
-        size=28,
+        size=32,
         dy=20,
         color='white',
         fontWeight='bold'
