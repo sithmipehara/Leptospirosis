@@ -473,7 +473,7 @@ def create_donut_chart(data, year_label):
         color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
                         legend=None),
         tooltip=["Attrition", "Count"]
-    ).properties(width=300, height=300)
+    ).properties(width=300, height=300, background='transparent')
 
     # Center text overlay (total count)
     center_text = alt.Chart(pd.DataFrame({
