@@ -440,7 +440,7 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Create columns with different widths
-col1, col2, col3, col4 = st.columns(1,3,3,3)  
+col1, col2, col33 = st.columns(3)  
 
 # First column: Metrics containers stacked vertically
 with col1:
@@ -465,10 +465,6 @@ with col3:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>progress chart</h5>", unsafe_allow_html=True)
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     
-# Fourth column of charts in one container
-with col4:
-    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
-    plot_time_series()
-    
+
 
 
