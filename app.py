@@ -278,7 +278,7 @@ def plot_yearly_cases():
     plt.xticks(SriLanka_cases['Year'])
     plt.grid(True, color='gray')
     plt.gca().set_facecolor('black')  # Set background color to black
-    st.pyplot(plt)
+    st.pyplot(plt, transparent=True)
     
 
 # Function to plot weekly cases
@@ -294,7 +294,7 @@ def plot_weekly_cases():
     plt.ylabel('No. of Leptospirosis Cases', color='white')
     plt.grid(True, color='gray')
     plt.gca().set_facecolor('black')  # Set background color to black
-    st.pyplot(plt)
+    st.pyplot(plt, transparent=True)
 
 # Function to forecast using RNN for weekly cases
 def forecast_rnn():
