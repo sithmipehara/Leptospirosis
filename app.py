@@ -252,7 +252,7 @@ def plot_top_districts(filtered_data):
 # Create a time series plot for the selected region
 def plot_time_series():
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.style.use('dark_background'20
+    plt.style.use('dark_background')
     ax.plot(region_data['Year'], region_data['Cases'], marker='o')
     ax.set_xlabel('Year')
     ax.set_ylabel('Cases')
