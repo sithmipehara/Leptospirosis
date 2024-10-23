@@ -447,7 +447,7 @@ with col1:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
     selected_year = st.selectbox("**Select a Year**", sorted(annual_cases_df['Year'].unique()))
     filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
-    selected_region = st.sidebar.selectbox("**Select a District**", sorted(annual_cases_df['Region'].unique()))
+    selected_region = st.selectbox("**Select a District**", sorted(annual_cases_df['Region'].unique()))
     region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
     st.markdown("</div>", unsafe_allow_html=True)
     
