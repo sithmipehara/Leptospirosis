@@ -104,15 +104,16 @@ SriLanka_data['Cases'] = SriLanka_data['Cases'].fillna(0).astype(int)
 # Header metrics
 current_year = datetime.now().year
 total_cases_current_year = SriLanka_data[SriLanka_data['Year'] == current_year]['Cases'].sum()
-
-
+max_cases_row = filtered_data.loc[filtered_data['Cases'].idxmax()]
+district_with_max_cases = max_cases_row['Region']
+max_cases = max_cases_row['Cases']
 
 # Display the metrics
 col1, col2, col3, col4 = st.columns(4)
 col1.markdown(f"<div class='metric-box box1'>Country<br><span style='font-size: 24px;'>Sri Lanka</span></div>", unsafe_allow_html=True)
 col2.markdown(f"<div class='metric-box box2'>Present Year<br><span style='font-size: 24px;'>{current_year}</span></div>", unsafe_allow_html=True)
 col3.markdown(f"<div class='metric-box box3'>Total Number of Cases<br><span style='font-size: 24px;'>{total_cases_current_year}</span></div>", unsafe_allow_html=True)
-col4.markdown(f"<div class='metric-box box4'>District with Highest Number of Cases<br><span style='font-size: 24px;'></span></div>", unsafe_allow_html=True)
+col4.markdown(f"<div class='metric-box box4'>District with Highest Number of Cases<br><span style='font-size: 24px;'>{district_with_max_cases}</span></div>", unsafe_allow_html=True)
 
 st.write(" ")
 st.write(" ")
@@ -168,6 +169,279 @@ def calculate_annual_cases(df):
 # Get the annual cases
 annual_cases_df = calculate_annual_cases(weekly_df)
 
+# Function to create a color scale based on the number of cases
+def get_color(cases, max_cases):
+    if cases == 0:
+        return 'gray'  # No data
+    elif cases < max_cases * 0.25:
+        return 'green'  # Low cases
+    elif cases < max_cases * 0.5:
+        return 'yellow'  # Moderate cases
+    elif cases < max_cases * 0.75:
+        return 'orange'  # High cases
+    else:
+        return 'red'  # Very high cases
+
+def create_sri_lanka_map(filtered_data):
+    # Create a base map centered on Sri Lanka
+    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=7)
+
+    # Get the maximum number of cases for scaling the color
+    max_cases = filtered_data['Cases'].max()
+
+    # Add district markers with color based on cases
+    for district, coordinates in district_coordinates.items():
+        # Get cases for the district in the selected year
+        district_data = filtered_data[filtered_data['Region'] == district]
+        if not district_data.empty:
+            cases = district_data['Cases'].values[0]
+            tooltip_text = f"{district}: {cases} cases"
+            # Get color based on the number of cases
+            color = get_color(cases, max_cases)
+        else:
+            cases = 0
+            tooltip_text = f"{district}: No Data"
+            color = 'gray'  # Default color for no data
+        
+        # Add marker with a location icon and dynamic color
+        folium.Marker(
+            location=coordinates,
+            icon=folium.Icon(color=color, icon_color='white', icon='info-sign', prefix='glyphicon'),
+            popup=tooltip_text,
+            tooltip=tooltip_text
+        ).add_to(sri_lanka_map)
+    
+    # Load GeoJSON data for district boundaries
+    with open('District_geo.json', 'r', encoding='utf-8') as f:
+        geojson_data = f.read()
+        
+    # Create a GeoJSON layer with black and thin borders
+    geojson_layer = folium.GeoJson(geojson_data, style_function=lambda x: {'color': 'black', 'weight': 1})
+    geojson_layer.add_to(sri_lanka_map)
+
+    return sri_lanka_map
+
+def plot_top_districts(filtered_data):
+    # Get the top 10 districts by cases
+    top_districts = filtered_data.nlargest(10, 'Cases')
+
+    # Create a DataFrame for displaying
+    top_districts_df = pd.DataFrame({
+        'District': top_districts['Region'],
+        'Cases': top_districts['Cases']
+    })
+
+    # Calculate the maximum number of cases for scaling the progress bars
+    max_cases = top_districts['Cases'].max()
+
+    # Create a progress bar for each row
+    top_districts_df['Progress Bar'] = top_districts_df.apply(
+        lambda row: f'<div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 5px 0;">'
+                     f'<div style="width: {(row["Cases"] / max_cases) * 100}%; background-color:  #809fff; height: 15px; border-radius: 5px;"></div>'
+                     f'</div>', axis=1)
+
+    # Display the header for the table
+    st.markdown("<h6>Top 10 Districts with Leptospirosis Cases</h6>", unsafe_allow_html=True)
+
+    # Create a formatted string for the table
+    table_html = "<table style='width: 80%;'><thead><tr><th>District</th><th>Progress Bar</th></tr></thead><tbody>"
+    for index, row in top_districts_df.iterrows():
+        table_html += f"<tr><td>{row['District']}</td><td>{row['Progress Bar']}</td></tr>"
+    table_html += "</tbody></table>"
+
+    # Render the table
+    st.markdown(table_html, unsafe_allow_html=True)
+        
+# Create a time series plot for the selected region
+def plot_time_series():
+    fig, ax = plt.subplots(figsize=(12, 6))
+    plt.style.use('dark_background')
+    ax.plot(region_data['Year'], region_data['Cases'], marker='o')
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Cases')
+    ax.set_title(f'{selected_region} District', color='#ffe6b3')
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.xticks(region_data['Year'])
+    plt.grid(True, color='gray')
+    plt.gca().set_facecolor('black')
+    st.pyplot(fig)
+
+# Function to plot yearly cases
+def plot_yearly_cases():
+    SriLanka_cases = SriLanka_data.groupby('Year')['Cases'].sum().reset_index()
+    
+    plt.figure(figsize=(12, 6))
+    plt.style.use('dark_background')  # Set dark theme
+    plt.plot(SriLanka_cases['Year'], SriLanka_cases['Cases'], marker='o', linestyle='-')
+    
+    plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    
+    plt.title('From 2007 - Present', color='#ffe6b3')
+    plt.xlabel('Year', color='white')
+    plt.ylabel('Cases', color='white')
+    plt.xticks(SriLanka_cases['Year'])
+    plt.grid(True, color='gray')
+    plt.gca().set_facecolor('black')  # Set background color to black
+    st.pyplot(plt)
+    
+
+# Function to plot weekly cases
+def plot_weekly_cases():
+    SriLanka_data['Cases'] = SriLanka_data['Cases'].fillna(0)
+    
+    plt.figure(figsize=(12, 6))
+    plt.style.use('dark_background')  # Set dark theme
+    plt.plot(SriLanka_data['PDF_ID'], SriLanka_data['Cases'], marker='', linestyle='-', label='Actual Cases')
+    
+    plt.title('From 2007 - Present', color='#ffe6b3')
+    plt.xlabel('Week', color='white')
+    plt.ylabel('No. of Leptospirosis Cases', color='white')
+    plt.grid(True, color='gray')
+    plt.gca().set_facecolor('black')  # Set background color to black
+    st.pyplot(plt)
+
+# Function to forecast using RNN for weekly cases
+def forecast_rnn():
+    # Set random seed for reproducibility
+    random_seed = 1234
+    np.random.seed(random_seed)
+    tf.random.set_seed(random_seed)
+    
+    # Prepare the data
+    data = SriLanka_data['Cases'].values.reshape(-1, 1)
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_data = scaler.fit_transform(data)
+
+    # Create sequences for training
+    def create_dataset(data, time_step=1):
+        X, y = [], []
+        for i in range(len(data) - time_step - 1):
+            X.append(data[i:(i + time_step), 0])
+            y.append(data[i + time_step, 0])
+        return np.array(X), np.array(y)
+
+    time_step = 10
+    X, y = create_dataset(scaled_data, time_step)
+    X = X.reshape(X.shape[0], X.shape[1], 1)
+
+    # Split the data into training and testing sets
+    train_size = int(len(X) * 0.8)
+    X_train, X_test = X[:train_size], X[train_size:]
+    y_train, y_test = y[:train_size], y[train_size:]
+
+    # Build the RNN model
+    model = Sequential()
+    model.add(LSTM(50, return_sequences=True, input_shape=(X_train.shape[1], 1)))
+    model.add(Dropout(0.2))
+    model.add(LSTM(50, return_sequences=False))
+    model.add(Dropout(0.2))
+    model.add(Dense(1))
+
+    # Compile and train the model
+    model.compile(optimizer='adam', loss='mean_squared_error')
+    model.fit(X_train, y_train, epochs=50, batch_size=32)
+
+    # Make predictions
+    predictions = model.predict(X_test)
+    predictions = scaler.inverse_transform(predictions)
+
+    # Evaluate model performance
+    y_test_reshaped = y_test.reshape(-1, 1)
+    y_test_inverse = scaler.inverse_transform(y_test_reshaped)
+
+    mae = mean_absolute_error(y_test_inverse, predictions)
+    rmse = mean_squared_error(y_test_inverse, predictions, squared=False)
+
+    # Calculate accuracy percentage
+    accuracy_percentage = (1 - (mae / np.mean(y_test_inverse))) * 100
+
+    # Forecast for the next 12 weeks
+    last_sequence = scaled_data[-time_step:].reshape(1, time_step, 1)
+    future_forecast = []
+    for _ in range(12):
+        forecast = model.predict(last_sequence)
+        future_forecast.append(forecast[0, 0])
+        last_sequence = np.append(last_sequence[:, 1:, :], forecast.reshape(1, 1, 1), axis=1)
+
+    future_forecast = scaler.inverse_transform(np.array(future_forecast).reshape(-1, 1))
+    future_forecast = np.round(future_forecast).astype(int)
+
+    return predictions, future_forecast, mae, rmse, accuracy_percentage
+
+# Function to forecast annual cases using RNN
+def forecast_annual_rnn():
+    # Set random seed for reproducibility
+    random_seed = 42
+    np.random.seed(random_seed)
+    tf.random.set_seed(random_seed)
+    
+    # Prepare the data
+    annual_data = SriLanka_data.groupby('Year')['Cases'].sum().values.reshape(-1, 1)
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_data = scaler.fit_transform(annual_data)
+
+    # Create sequences for training
+    def create_dataset(data, time_step=1):
+        X, y = [], []
+        for i in range(len(data) - time_step - 1):
+            X.append(data[i:(i + time_step), 0])
+            y.append(data[i + time_step, 0])
+        return np.array(X), np.array(y)
+
+    time_step = 5  # Change this for annual data
+    X, y = create_dataset(scaled_data, time_step)
+    X = X.reshape(X.shape[0], X.shape[1], 1)
+
+    # Split the data into training and testing sets
+    train_size = int(len(X) * 0.8)
+    X_train, X_test = X[:train_size], X[train_size:]
+    y_train, y_test = y[:train_size], y[train_size:]
+
+    # Build the RNN model
+    model = Sequential()
+    model.add(LSTM(50, return_sequences=True, input_shape=(X_train.shape[1], 1)))
+    model.add(Dropout(0.2))
+    model.add(LSTM(50, return_sequences=False))
+    model.add(Dropout(0.2))
+    model.add(Dense(1))
+
+    # Compile and train the model
+    model.compile(optimizer='adam', loss='mean_squared_error')
+    model.fit(X_train, y_train, epochs=50, batch_size=32)
+
+    # Make predictions
+    predictions = model.predict(X_test)
+    predictions = scaler.inverse_transform(predictions)
+
+    # Evaluate model performance
+    y_test_reshaped = y_test.reshape(-1, 1)
+    y_test_inverse = scaler.inverse_transform(y_test_reshaped)
+
+    mae = mean_absolute_error(y_test_inverse, predictions)
+    rmse = mean_squared_error(y_test_inverse, predictions, squared=False)
+
+    # Calculate accuracy percentage
+    accuracy_percentage = (1 - (mae / np.mean(y_test_inverse))) * 100
+
+    # Forecast for the next 5 years
+    last_sequence = scaled_data[-time_step:].reshape(1, time_step, 1)
+    future_forecast = []
+    for _ in range(5):
+        forecast = model.predict(last_sequence)
+        future_forecast.append(forecast[0, 0])
+        last_sequence = np.append(last_sequence[:, 1:, :], forecast.reshape(1, 1, 1), axis=1)
+
+    future_forecast = scaler.inverse_transform(np.array(future_forecast).reshape(-1, 1))
+    future_forecast = np.round(future_forecast).astype(int)
+
+    return predictions, future_forecast, mae, rmse, accuracy_percentage
+
+# Prepare annual data for each district
+def prepare_annual_district_data(df):
+    # Group by Year and Region, sum the Cases
+    annual_district_data = df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
+    return annual_district_data
+
 # Create columns with different widths
 col1, col2, col3, col4 = st.columns(4)  
 
@@ -185,108 +459,19 @@ with col1:
 # Second column: Three containers for donut chart and response details
 with col2:
     # Container for Donut Chart
-    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Response Variable Distribution</h5>", unsafe_allow_html=True)
-    
-    # Function to create a color scale based on the number of cases
-    def get_color(cases, max_cases):
-        if cases == 0:
-            return 'gray'  # No data
-        elif cases < max_cases * 0.25:
-            return 'green'  # Low cases
-        elif cases < max_cases * 0.5:
-            return 'yellow'  # Moderate cases
-        elif cases < max_cases * 0.75:
-            return 'orange'  # High cases
-        else:
-            return 'red'  # Very high cases
-
-    def create_sri_lanka_map(filtered_data):
-        # Create a base map centered on Sri Lanka
-        sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=7)
-
-        # Get the maximum number of cases for scaling the color
-        max_cases = filtered_data['Cases'].max()
-
-        # Add district markers with color based on cases
-        for district, coordinates in district_coordinates.items():
-            # Get cases for the district in the selected year
-            district_data = filtered_data[filtered_data['Region'] == district]
-            if not district_data.empty:
-                cases = district_data['Cases'].values[0]
-                tooltip_text = f"{district}: {cases} cases"
-                # Get color based on the number of cases
-                color = get_color(cases, max_cases)
-            else:
-                cases = 0
-                tooltip_text = f"{district}: No Data"
-                color = 'gray'  # Default color for no data
-        
-            # Add marker with a location icon and dynamic color
-            folium.Marker(
-                location=coordinates,
-                icon=folium.Icon(color=color, icon_color='white', icon='info-sign', prefix='glyphicon'),
-                popup=tooltip_text,
-                tooltip=tooltip_text
-            ).add_to(sri_lanka_map)
-    
-        # Load GeoJSON data for district boundaries
-        with open('District_geo.json', 'r', encoding='utf-8') as f:
-            geojson_data = f.read()
-        
-        # Create a GeoJSON layer with black and thin borders
-        geojson_layer = folium.GeoJson(geojson_data, style_function=lambda x: {'color': 'black', 'weight': 1})
-        geojson_layer.add_to(sri_lanka_map)
-
-        return sri_lanka_map
+    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
+    sri_lanka_map = create_sri_lanka_map(filtered_data)
+    folium_static(sri_lanka_map,width=500)
     
 # Third column of charts in one container
 with col3:
-    def plot_top_districts(filtered_data):
-        # Get the top 10 districts by cases
-        top_districts = filtered_data.nlargest(10, 'Cases')
-
-        # Create a DataFrame for displaying
-        top_districts_df = pd.DataFrame({
-           'District': top_districts['Region'],
-           'Cases': top_districts['Cases']
-        })
-
-        # Calculate the maximum number of cases for scaling the progress bars
-        max_cases = top_districts['Cases'].max()
-
-        # Create a progress bar for each row
-        top_districts_df['Progress Bar'] = top_districts_df.apply(
-           lambda row: f'<div style="width: 100%; background-color: #e0e0e0; border-radius: 5px; margin: 5px 0;">'
-                     f'<div style="width: {(row["Cases"] / max_cases) * 100}%; background-color:  #809fff; height: 15px; border-radius: 5px;"></div>'
-                     f'</div>', axis=1)
-
-        # Display the header for the table
-        st.markdown("<h6>Top 10 Districts with Leptospirosis Cases</h6>", unsafe_allow_html=True)
-
-        # Create a formatted string for the table
-        table_html = "<table style='width: 80%;'><thead><tr><th>District</th><th>Progress Bar</th></tr></thead><tbody>"
-        for index, row in top_districts_df.iterrows():
-            table_html += f"<tr><td>{row['District']}</td><td>{row['Progress Bar']}</td></tr>"
-            table_html += "</tbody></table>"
-
-        # Render the table
-        st.markdown(table_html, unsafe_allow_html=True)
+    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>progress chart</h5>", unsafe_allow_html=True)
+    plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     
 # Fourth column of charts in one container
 with col4:
-    # Create a time series plot for the selected region
-    def plot_time_series():
-        fig, ax = plt.subplots(figsize=(12, 6))
-        plt.style.use('dark_background')
-        ax.plot(region_data['Year'], region_data['Cases'], marker='o')
-        ax.set_xlabel('Year')
-        ax.set_ylabel('Cases')
-        ax.set_title(f'{selected_region} District', color='#ffe6b3')
-        ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-        plt.xticks(region_data['Year'])
-        plt.grid(True, color='gray')
-        plt.gca().set_facecolor('black')
-        st.pyplot(fig)
+    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
+    plot_time_series()
     
 
 
