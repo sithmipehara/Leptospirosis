@@ -45,7 +45,7 @@ st.markdown("""
     color: white; /* Text color */
     margin: 5px;  /* Reduced margin */
 }
-.donut-container {
+.donut-container {margin: 5px;
     padding: 10px;  /* Reduced padding */
     border-radius: 0px;
 }
@@ -57,7 +57,7 @@ st.markdown("""
 .stSelectbox {
     transition: background-color 0.3s;
     line-height: 50px;
-
+    height:150px;
     text-align: center;
     background-color: #3c3c44; /* Change this to your desired color */
     border-radius: 20px; /* Optional: rounded corners */
