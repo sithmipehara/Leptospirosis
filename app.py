@@ -450,7 +450,7 @@ def create_donut_chart(data, year_label):
     })
 
     # Donut chart base with border for transparent area
-    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=60, stroke='#99b3ff', strokeWidth=2).encode(
+    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=70, stroke='#99b3ff', strokeWidth=2).encode(
         theta=alt.Theta(field="Count", type="quantitative"),
         color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)']),
                         legend=None),
@@ -521,7 +521,7 @@ with col5:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col6:
-    st.markdown("<div class='chart-container'>", unsafe_allow_html=True)
+    st.markdown(f"<div class='chart-container'><h5 style='text-align: center;'>Percentage of Highest Cases in {highest_year} </h5>", unsafe_allow_html=True)
     st.write(" ")
     st.write(" ")
     highest_year = annual_cases_df.loc[annual_cases_df['Cases'].idxmax(), 'Year']
@@ -534,7 +534,7 @@ with col6:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
-    st.markdown("<div class='chart-container'>", unsafe_allow_html=True)
+    st.markdown(f"<div class='chart-container'><h5 style='text-align: center;'>Percentage of Highest Cases in {current_year}</h5>", unsafe_allow_html=True)
     st.write(" ")
     st.write(" ")
     current_year_data = annual_cases_df[annual_cases_df['Year'] == current_year]
