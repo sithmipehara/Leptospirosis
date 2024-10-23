@@ -449,11 +449,10 @@ def create_donut_chart(data, year_label):
         'Count': [max_cases, total_cases - max_cases]
     })
 
-    # Donut chart base
-    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=60).encode(
+    # Donut chart base with border for transparent area
+    donut_chart = alt.Chart(response_data).mark_arc(innerRadius=60, stroke='#99b3ff', strokeWidth=2).encode(
         theta=alt.Theta(field="Count", type="quantitative"),
-        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)']),
-                        legend=alt.Legend(orient="top", direction="horizontal")),
+        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#99b3ff', 'rgba(0, 0, 0, 0)'])),
         tooltip=["Attrition", "Count"]
     ).properties(width=300, height=300)
 
