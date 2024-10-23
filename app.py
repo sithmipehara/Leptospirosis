@@ -57,7 +57,7 @@ st.markdown("""
 .stSelectbox {
     transition: background-color 0.3s;
     line-height: 50px;
-    height:100px;
+    height:140px;
     text-align: center;
     background-color: #3c3c44; /* Change this to your desired color */
     border-radius: 20px; /* Optional: rounded corners */
@@ -181,7 +181,7 @@ def get_color(cases, max_cases):
 
 def create_sri_lanka_map(filtered_data):
     # Create a base map centered on Sri Lanka
-    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=7)
+    sri_lanka_map = folium.Map(location=[7.8731, 80.7718], zoom_start=6.5)
 
     # Get the maximum number of cases for scaling the color
     max_cases = filtered_data['Cases'].max()
