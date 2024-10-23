@@ -33,10 +33,10 @@ st.markdown("""
     font-weight: bold;
 }
 
-.box1 { background-color: #b3d9ff;color: #99b3ff; }
-.box2 { background-color: #66b3ff;color: #668cff; }
-.box3 { background-color: #ff6666; color:#ffcc66;}
-.box4 { background-color: #ff9999;color: #ffd480; }
+.box1 { background-color: #99b3ff;color: #000000; }
+.box2 { background-color: #668cff;color: #000000; }
+.box3 { background-color: #ffcc66; color:#000000;}
+.box4 { background-color: #ffd480;color: #000000; }
 
 .container {
     padding: 10px;  /* Reduced padding */
