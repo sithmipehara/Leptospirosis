@@ -23,9 +23,23 @@ st.set_page_config(page_title="Local Leptospirosis Dashboard", layout="wide", in
 
 st.markdown("""
 <style>
+.box1 { background-color: #5cd6d6;color: #000000; }
+.box2 { background-color: #668cff;color: #000000; }
+.box3 { background-color: #ffcc66; color:#000000;}
+.box4 { background-color: #ffd480;color: #000000; }
+
+.stSelectbox {
+    transition: background-color 0.3s;
+    line-height: 50px;
+    height:140px;
+    text-align: center;
+    background-color: #3c3c44; /* Change this to your desired color */
+    border-radius: 20px; /* Optional: rounded corners */
+    padding: 10px; /* Optional: padding inside the selectbox */
+}
+
 .reportview-container {
         background-color: #0E1117; 
-}
 
 /* Style for individual metric boxes */
 .metric-box {
@@ -36,11 +50,6 @@ st.markdown("""
     font-size: 16px;
     font-weight: bold;
 }
-
-.box1 { background-color: #5cd6d6;color: #000000; }
-.box2 { background-color: #668cff;color: #000000; }
-.box3 { background-color: #ffcc66; color:#000000;}
-.box4 { background-color: #ffd480;color: #000000; }
 
 .container {
     padding: 10px;  /* Reduced padding */
@@ -58,16 +67,6 @@ st.markdown("""
     border-radius: 0px;
 }
 
-.stSelectbox {
-    transition: background-color 0.3s;
-    line-height: 50px;
-    height:140px;
-    text-align: center;
-    background-color: #3c3c44; /* Change this to your desired color */
-    border-radius: 20px; /* Optional: rounded corners */
-    padding: 10px; /* Optional: padding inside the selectbox */
-}
-
 .custom-title {
     font-size: 36px;  /* Change to your desired font size */
     color: #5cd6d6; 
@@ -78,6 +77,7 @@ st.markdown("""
     font-size: 20px;   /* Change to your desired font size for content */
     color: white;   
     text-align: center ;/* Change to your desired font color for content */
+}
 }
 
 [data-testid="stSidebar"] {
