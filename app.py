@@ -25,7 +25,8 @@ st.markdown("""
 <style>
 .reportview-container {
         background-color: #0E1117; 
-        
+}
+
 /* Style for individual metric boxes */
 .metric-box {
     padding: 20px;
