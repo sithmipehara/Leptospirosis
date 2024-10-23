@@ -465,31 +465,29 @@ with col3:
     st.markdown("</div>", unsafe_allow_html=True)
 
 def plot_donut_chart(cases_data, year_label):
-    # Calculate the maximum cases and current year cases
+    if cases_data.empty or cases_data['Cases'].sum() == 0:
+        st.warning(f"No data available for {year_label}.")
+        return
+    
     max_cases = cases_data['Cases'].max()
+    total_cases = cases_data['Cases'].sum()
     
-    # Prepare data for the donut chart
-    sizes = [max_cases, cases_data['Cases'].sum() - max_cases]
-    colors = ['#99b3ff', 'rgba(0, 0, 0, 0)']  # Color for max cases and transparent for others
+    sizes = [max_cases, total_cases - max_cases] if total_cases > 0 else [0, 1]
+    colors = ['#99b3ff', 'rgba(0, 0, 0, 0)']
     
-    # Create a donut chart
     fig, ax = plt.subplots(figsize=(8, 8), facecolor='none')
     
     wedges, texts = ax.pie(sizes, colors=colors, startangle=90, counterclock=False,
-                           wedgeprops=dict(width=0.3))  # Create a donut shape
+                           wedgeprops=dict(width=0.3))
     
-    # Draw a circle at the center of pie to make it look like a donut
     centre_circle = plt.Circle((0, 0), 0.70, fc='black') 
     fig.gca().add_artist(centre_circle)
     
-    # Display year and percentage in the center
-    percentage = (max_cases / cases_data['Cases'].sum()) * 100 if cases_data['Cases'].sum() > 0 else 0
+    percentage = (max_cases / total_cases * 100) if total_cases > 0 else 0
     ax.text(0, 0, f"{year_label}\n{percentage:.1f}%", horizontalalignment='center',
             verticalalignment='center', fontsize=22, color='#99b3ff')
     
     ax.set_title(f'Percentage of Cases in {year_label}', fontsize=16)
-
-    st.pyplot(fig)
 
 # Additional Row for New Graphs
 col5, col6, col7 = st.columns([2,1,1])  
@@ -503,9 +501,8 @@ with col6:
     st.markdown("<div class='chart-container'>", unsafe_allow_html=True)
     st.write(" ")
     st.write(" ")
-    # Get data for highest cases year
-    highest_year = region_data.loc[region_data['Cases'].idxmax(), 'Year']
-    highest_year_data = region_data[region_data['Year'] == highest_year]
+    highest_year = annual_cases_df.loc[annual_cases_df['Cases'].idxmax(), 'Year']
+    highest_year_data = annual_cases_df[annual_cases_df['Year'] == highest_year]
     
     plot_donut_chart(highest_year_data, highest_year)
 
@@ -515,8 +512,7 @@ with col7:
     st.markdown("<div class='chart-container'>", unsafe_allow_html=True)
     st.write(" ")
     st.write(" ")
-    current_year = datetime.now().year # Get current year from data
-    current_year_data = region_data[region_data['Year'] == current_year]
+    current_year_data = annual_cases_df[annual_cases_df['Year'] == current_year]
     
     plot_donut_chart(current_year_data, current_year)
     st.markdown("</div>", unsafe_allow_html=True)
