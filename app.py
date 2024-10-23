@@ -58,6 +58,7 @@ st.markdown("""
     transition: background-color 0.3s;
     line-height: 50px;
     height: 150px; 
+    width:50px;
     text-align: center;
     background-color: #3c3c44; /* Change this to your desired color */
     border-radius: 20px; /* Optional: rounded corners */
@@ -443,7 +444,7 @@ def prepare_annual_district_data(df):
 col1, col2, col3 = st.columns(3)  
 
 with col1:
-    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
+    st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
     selected_year = st.selectbox("**Select a Year**", sorted(annual_cases_df['Year'].unique()))
     filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
     selected_region = st.selectbox("**Select a District**", sorted(annual_cases_df['Region'].unique()))
@@ -451,13 +452,13 @@ with col1:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col2:
-    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>progress chart</h5>", unsafe_allow_html=True)
+    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map,width=500)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col3:
-    st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
+    st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
     st.markdown("</div>", unsafe_allow_html=True)
 
