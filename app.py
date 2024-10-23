@@ -33,7 +33,7 @@ st.markdown("""
     font-weight: bold;
 }
 
-.box1 { background-color: #ff8080;color: #000000; }
+.box1 { background-color: #5cd6d6;color: #000000; }
 .box2 { background-color: #668cff;color: #000000; }
 .box3 { background-color: #ffcc66; color:#000000;}
 .box4 { background-color: #ffd480;color: #000000; }
