@@ -440,32 +440,23 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 # Create columns with different widths
-col1, col2, col3, col4 = st.columns(4)  
+col1, col2, col3 = st.columns(3)  
 
-# First column: Metrics containers stacked vertically
 with col1:
-    st.markdown("<div class='donut-container'>", unsafe_allow_html=True)
-    selected_year = st.selectbox("**Select a Year**", sorted(annual_cases_df['Year'].unique()))
-    # Filter data based on the selected year
-    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
-
-    selected_region = st.selectbox("**Select a District**", sorted(annual_cases_df['Region'].unique()))
-    # Filter data based on the selected region
-    region_data = annual_cases_df[annual_cases_df['Region'] == selected_region]
-
-# Second column: Three containers for donut chart and response details
-with col2:
-    # Container for Donut Chart
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Leptospirosis Cases Distribution in Year {selected_year}</h5>", unsafe_allow_html=True)
+    selected_year = st.selectbox("**Select a Year**", sorted(annual_cases_df['Year'].unique()))
+    filtered_data = annual_cases_df[annual_cases_df['Year'] == selected_year]
     sri_lanka_map = create_sri_lanka_map(filtered_data)
     folium_static(sri_lanka_map,width=500)
+    st.markdown("</div>", unsafe_allow_html=True)
     
-# Third column of charts in one container
-with col3:
+with col2:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>progress chart</h5>", unsafe_allow_html=True)
     plot_top_districts(annual_cases_df[annual_cases_df['Year'] == selected_year])
+    st.markdown("</div>", unsafe_allow_html=True)
     
-with col4:
+with col3:
     st.markdown("<div class='donut-container'><h5 style='text-align: center;'>Annual District-wise Leptospirosis Cases</h5>", unsafe_allow_html=True)
     plot_time_series()
+    st.markdown("</div>", unsafe_allow_html=True)
 
