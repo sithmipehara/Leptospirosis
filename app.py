@@ -38,9 +38,6 @@ st.markdown("""
     padding: 10px; /* Optional: padding inside the selectbox */
 }
 
-.reportview-container {
-        background-color: #0E1117; 
-
 /* Style for individual metric boxes */
 .metric-box {
     padding: 20px;
@@ -61,6 +58,7 @@ st.markdown("""
 .donut-container {
     padding: 10px;  /* Reduced padding */
     border-radius: 0px;
+    background-color: #0E1117; 
 }
 .chart-container {
     padding: 10px;  /* Reduced padding */
@@ -78,14 +76,7 @@ st.markdown("""
     color: white;   
     text-align: center ;/* Change to your desired font color for content */
 }
-}
 
-[data-testid="stSidebar"] {
-    background-color: #222222;  /* Change this to your desired sidebar color */
-}
-[data-testid="stAppViewContainer"] {
-    background-color: #000000;  /* Change this to your desired main background color */
-}
 </style>
 """, unsafe_allow_html=True)
 
