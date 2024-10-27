@@ -452,9 +452,14 @@ def prepare_annual_district_data(df):
     return annual_district_data
 
 def create_donut_chart(region_data, year_label):
-    # Calculate total cases for the specified region and year
+    # Calculate total cases for the specified region across all years
     total_cases = region_data['Cases'].sum()  # Total cases in the selected region
-    max_cases = region_data['Cases'].max()    # Maximum cases in a single year in the selected region
+    
+    # Calculate cases for the specified year
+    year_cases = region_data[region_data['Year'] == year_label]['Cases'].sum()
+    
+    # Calculate other cases (total - year_cases)
+    other_cases = total_cases - year_cases
     
     # If there are no cases, return an empty chart or handle gracefully
     if total_cases == 0:
@@ -462,14 +467,16 @@ def create_donut_chart(region_data, year_label):
 
     # Prepare data for Altair chart
     response_data = pd.DataFrame({
-        'Attrition': ['Max Cases', 'Other Cases'],
-        'Count': [max_cases, total_cases - max_cases]
+        'Attrition': ['Cases in ' + str(year_label), 'Other Cases'],
+        'Count': [year_cases, other_cases]
     })
 
     # Donut chart base with border for transparent area
     donut_chart = alt.Chart(response_data).mark_arc(innerRadius=75, stroke='#ffcc66', strokeWidth=2).encode(
         theta=alt.Theta(field="Count", type="quantitative"),
-        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Max Cases', 'Other Cases'], range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
+        color=alt.Color('Attrition:N', 
+                        scale=alt.Scale(domain=['Cases in ' + str(year_label), 'Other Cases'], 
+                                        range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
                         legend=None),
         tooltip=["Attrition", "Count"]
     ).properties(width=300, height=300)
@@ -477,7 +484,7 @@ def create_donut_chart(region_data, year_label):
     # Center text overlay (total count)
     center_text = alt.Chart(pd.DataFrame({
         'text1': [year_label],
-        'text2': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+        'text2': [f"{(year_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
     })).mark_text(
         align='center',
         baseline='middle',
@@ -490,7 +497,7 @@ def create_donut_chart(region_data, year_label):
 
     # Add another layer for the percentage
     percentage_text = alt.Chart(pd.DataFrame({
-        'text': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+        'text': [f"{(year_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
     })).mark_text(
         align='center',
         baseline='middle',
