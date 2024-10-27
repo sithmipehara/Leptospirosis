@@ -451,10 +451,10 @@ def prepare_annual_district_data(df):
     annual_district_data = df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
     return annual_district_data
 
-def create_donut_chart(region_data, year_label):
-    # Calculate total cases for the specified region
-    total_cases = region_data['Cases'].sum()
-    max_cases = region_data['Cases'].max()
+def create_donut_chart(data, year_label):
+    # Calculate total and max cases for the donut chart
+    total_cases = data['Cases'].sum()
+    max_cases = data['Cases'].max()
     
     # Prepare data for Altair chart
     response_data = pd.DataFrame({
