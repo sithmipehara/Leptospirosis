@@ -451,11 +451,15 @@ def prepare_annual_district_data(df):
     annual_district_data = df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
     return annual_district_data
 
-def create_donut_chart(data, year_label):
-    # Calculate total and max cases for the donut chart
-    total_cases = data['Cases'].sum()
-    max_cases = data['Cases'].max()
+def create_donut_chart(region_data, year_label):
+    # Calculate total cases for the specified region and year
+    total_cases = region_data['Cases'].sum()  # Total cases in the selected region
+    max_cases = region_data['Cases'].max()    # Maximum cases in a single year in the selected region
     
+    # If there are no cases, return an empty chart or handle gracefully
+    if total_cases == 0:
+        return alt.Chart().mark_text(text='No Data').properties(width=300, height=300)
+
     # Prepare data for Altair chart
     response_data = pd.DataFrame({
         'Attrition': ['Max Cases', 'Other Cases'],
@@ -539,16 +543,11 @@ with col6:
     # Find year with highest cases in the selected region
     highest_year = region_data.loc[region_data['Cases'].idxmax(), 'Year']
     highest_year_data = region_data[region_data['Year'] == highest_year]
-    
     st.write(" ")
     st.write(" ")
-    
     st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year}</h6>", unsafe_allow_html=True)
-    
-    # Create donut chart for year with highest cases
     donut_chart_highest_year = create_donut_chart(highest_year_data, highest_year)
     st.altair_chart(donut_chart_highest_year)
-    
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
