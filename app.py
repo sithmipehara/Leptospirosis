@@ -451,37 +451,29 @@ def prepare_annual_district_data(df):
     annual_district_data = df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
     return annual_district_data
 
-def create_donut_chart(region_data, year_label):
-    # Calculate total cases for the specified region across all years
-    total_cases = region_data['Cases'].sum()  # Total cases in the selected region
+def create_donut_chart(data, year_label, selected_region):
+    # Filter data by the selected region
+    region_data = data[data['Region'] == selected_region]
     
-    # Calculate cases for the specified year
+    # Calculate total cases for the region and cases for the specified year
+    total_cases = region_data['Cases'].sum()
     year_cases = region_data[region_data['Year'] == year_label]['Cases'].sum()
     
-    # Calculate other cases (total - year_cases)
-    other_cases = total_cases - year_cases
-    
-    # If there are no cases, return an empty chart or handle gracefully
-    if total_cases == 0:
-        return alt.Chart().mark_text(text='No Data').properties(width=300, height=300)
-
-    # Prepare data for Altair chart
+    # Prepare data for the Altair chart
     response_data = pd.DataFrame({
-        'Attrition': ['Cases in ' + str(year_label), 'Other Cases'],
-        'Count': [year_cases, other_cases]
+        'Attrition': ['Year Cases', 'Other Cases'],
+        'Count': [year_cases, total_cases - year_cases]
     })
 
-    # Donut chart base with border for transparent area
+    # Donut chart with transparent area
     donut_chart = alt.Chart(response_data).mark_arc(innerRadius=75, stroke='#ffcc66', strokeWidth=2).encode(
         theta=alt.Theta(field="Count", type="quantitative"),
-        color=alt.Color('Attrition:N', 
-                        scale=alt.Scale(domain=['Cases in ' + str(year_label), 'Other Cases'], 
-                                        range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
+        color=alt.Color('Attrition:N', scale=alt.Scale(domain=['Year Cases', 'Other Cases'], range=['#ffcc66', 'rgba(0, 0, 0, 0)']),
                         legend=None),
         tooltip=["Attrition", "Count"]
     ).properties(width=300, height=300)
 
-    # Center text overlay (total count)
+    # Center text overlay showing the year label and percentage
     center_text = alt.Chart(pd.DataFrame({
         'text1': [year_label],
         'text2': [f"{(year_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
@@ -495,7 +487,7 @@ def create_donut_chart(region_data, year_label):
         text='text1:N'
     )
 
-    # Add another layer for the percentage
+    # Percentage text overlay in the center
     percentage_text = alt.Chart(pd.DataFrame({
         'text': [f"{(year_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
     })).mark_text(
@@ -511,6 +503,7 @@ def create_donut_chart(region_data, year_label):
 
     # Combine the donut chart and center text
     return (donut_chart + center_text + percentage_text).configure_view(stroke=None)
+
     
 # Create columns with different widths
 col1, col2, col3 = st.columns([1, 2, 2]) 
@@ -547,25 +540,19 @@ with col5:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col6:
-    # Find year with highest cases in the selected region
     highest_year = region_data.loc[region_data['Cases'].idxmax(), 'Year']
-    highest_year_data = region_data[region_data['Year'] == highest_year]
-    st.write(" ")
-    st.write(" ")
-    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year}</h6>", unsafe_allow_html=True)
-    donut_chart_highest_year = create_donut_chart(highest_year_data, highest_year)
+    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year} </h6>", unsafe_allow_html=True)
+    donut_chart_highest_year = create_donut_chart(annual_cases_df, highest_year, selected_region)
     st.altair_chart(donut_chart_highest_year)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
-    current_year_data = region_data[region_data['Year'] == current_year]
-    st.write(" ")
-    st.write(" ")
+    current_year = annual_cases_df['Year'].max()  # Assuming you want the latest year available
     st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {current_year}</h6>", unsafe_allow_html=True)
-    donut_chart_current_year = create_donut_chart(current_year_data,current_year)
+    donut_chart_current_year = create_donut_chart(annual_cases_df, current_year, selected_region)
     st.altair_chart(donut_chart_current_year)
     st.markdown("</div>", unsafe_allow_html=True)
-
+    
 # Additional Row for New Graphs
 col8, col9 = st.columns(2)  
     
