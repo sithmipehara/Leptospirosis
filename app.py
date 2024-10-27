@@ -451,15 +451,20 @@ def prepare_annual_district_data(df):
     annual_district_data = df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
     return annual_district_data
 
-def create_donut_chart(data, year_label):
-    # Calculate total and max cases for the donut chart
-    total_cases = data['Cases'].sum()
-    max_cases = data['Cases'].max()
+def create_donut_chart(region_data):
+    # Calculate total cases for 2024 and find year with max cases
+    total_cases_2024 = region_data[region_data['Year'] == 2024]['Cases'].sum()
     
+    # Find year with maximum cases in the selected region
+    max_year_data = region_data.groupby('Year')['Cases'].sum().reset_index()
+    max_cases_row = max_year_data.loc[max_year_data['Cases'].idxmax()]
+    max_cases = max_cases_row['Cases']
+    year_label = max_cases_row['Year']
+
     # Prepare data for Altair chart
     response_data = pd.DataFrame({
         'Attrition': ['Max Cases', 'Other Cases'],
-        'Count': [max_cases, total_cases - max_cases]
+        'Count': [max_cases, total_cases_2024 - max_cases]
     })
 
     # Donut chart base with border for transparent area
@@ -473,7 +478,7 @@ def create_donut_chart(data, year_label):
     # Center text overlay (total count)
     center_text = alt.Chart(pd.DataFrame({
         'text1': [year_label],
-        'text2': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+        'text2': [f"{(max_cases / total_cases_2024 * 100) if total_cases_2024 > 0 else 0:.1f}%"]
     })).mark_text(
         align='center',
         baseline='middle',
@@ -486,7 +491,7 @@ def create_donut_chart(data, year_label):
 
     # Add another layer for the percentage
     percentage_text = alt.Chart(pd.DataFrame({
-        'text': [f"{(max_cases / total_cases * 100) if total_cases > 0 else 0:.1f}%"]
+        'text': [f"{(max_cases / total_cases_2024 * 100) if total_cases_2024 > 0 else 0:.1f}%"]
     })).mark_text(
         align='center',
         baseline='middle',
@@ -550,7 +555,7 @@ with col7:
     st.write(" ")
     st.write(" ")
     st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {current_year}</h6>", unsafe_allow_html=True)
-    donut_chart_current_year = create_donut_chart(current_year_data, current_year)
+    donut_chart_current_year = create_donut_chart(region_data)
     st.altair_chart(donut_chart_current_year)
     st.markdown("</div>", unsafe_allow_html=True)
 
