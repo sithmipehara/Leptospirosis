@@ -536,13 +536,19 @@ with col5:
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col6:
+    # Find year with highest cases in the selected region
     highest_year = region_data.loc[region_data['Cases'].idxmax(), 'Year']
     highest_year_data = region_data[region_data['Year'] == highest_year]
+    
     st.write(" ")
     st.write(" ")
-    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year} </h6>", unsafe_allow_html=True)
+    
+    st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year}</h6>", unsafe_allow_html=True)
+    
+    # Create donut chart for year with highest cases
     donut_chart_highest_year = create_donut_chart(highest_year_data, highest_year)
     st.altair_chart(donut_chart_highest_year)
+    
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
