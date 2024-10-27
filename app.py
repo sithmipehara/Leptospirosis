@@ -541,13 +541,17 @@ with col5:
     
 with col6:
     highest_year = region_data.loc[region_data['Cases'].idxmax(), 'Year']
+    st.write(" ")
+    st.write(" ")
     st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {highest_year} </h6>", unsafe_allow_html=True)
     donut_chart_highest_year = create_donut_chart(annual_cases_df, highest_year, selected_region)
     st.altair_chart(donut_chart_highest_year)
     st.markdown("</div>", unsafe_allow_html=True)
     
 with col7:
-    current_year = annual_cases_df['Year'].max()  # Assuming you want the latest year available
+    current_year = annual_cases_df['Year'].max() 
+    st.write(" ")
+    st.write(" ")
     st.markdown(f"<div class='chart-container'><h6 style='text-align: center;'>Percentage of Highest Cases in {current_year}</h6>", unsafe_allow_html=True)
     donut_chart_current_year = create_donut_chart(annual_cases_df, current_year, selected_region)
     st.altair_chart(donut_chart_current_year)
