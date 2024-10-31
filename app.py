@@ -629,7 +629,7 @@ with col9:
     
         # Plot the predicted values
         predicted_weeks = np.arange(len(SriLanka_data) - len(predictions), len(SriLanka_data))
-        plt.plot(predicted_weeks, predictions, marker='x', linestyle='-', label='Predicted Cases', color='yellow')
+        plt.plot(predicted_weeks, predictions, marker='', linestyle='-', label='Predicted Cases', color='yellow')
     
         plt.title('Weekly Leptospirosis Cases with Forecast', color='#99b3ff')
         plt.xlabel('Week', color='white')
